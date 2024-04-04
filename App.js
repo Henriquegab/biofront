@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './screens/SplashScreen';
 // SplashScreen.preventAutoHideAsync();
 import { useState,useEffect } from 'react';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack= createNativeStackNavigator();
 
@@ -31,7 +32,7 @@ export default function App() {
     {isLoading ? <SplashScreen /> : <Stack.Navigator 
         screenOptions={{ headerShown: false }}>
 
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={LoginScreen} />
         
       </Stack.Navigator>}
       

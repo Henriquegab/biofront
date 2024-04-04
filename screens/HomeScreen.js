@@ -3,7 +3,7 @@ import React from 'react'
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView className="border-red-600">
+    <SafeAreaView>
         <View>
             <Text className="font-bold">HomeScreen</Text>
         </View>
