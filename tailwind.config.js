@@ -6,7 +6,12 @@ module.exports = {
     "./pages/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'bioPrincipal': '#42c248',
+        
+      },
+    },
   },
   plugins: [],
 }
