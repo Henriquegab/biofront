@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, Image, TextInput } from 'react-na
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png'
+import email from '../assets/email3.png'
 
 const LoginScreen = () => {
 
@@ -31,9 +32,15 @@ const LoginScreen = () => {
          <Text className="font-bold text-white text-lg">BioFront</Text> 
 
         </View>
-        <View className="border-2 w-80 h-96 items-center mt-16 pt-4">
-          <TextInput className="w-64 h-10 border-2 p-1" onChangeText={onChangeText} value={text}></TextInput>
-          <Text className="font-bold text-white text-lg">BioFront</Text> 
+        <View className=" border-white w-80 h-96 items-center mt-16 pt-4">
+          <View className="flex-row rounded-3xl border-2 border-white">
+            <View className="w-10 rounded-full justify-center items-center">
+              <Image source={email} className="h-6 w-8 ml-1"></Image>
+            </View>
+            <TextInput className="w-64 h-10  border-white rounded-r-3xl p-1" onChangeText={onChangeText} value={text}></TextInput>
+          </View>
+          
+          
 
         </View>
         
