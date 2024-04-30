@@ -3,9 +3,8 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png'
 import email from '../assets/email3.png'
-import LoginButton from '../components/LoginButton';
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
 
 
   const [text, onChangeText] = React.useState('Email');
@@ -59,7 +58,9 @@ const LoginScreen = () => {
           </View>
           <View>
             <View className="flex-row rounded-sm">
-                <LoginButton></LoginButton>
+                <TouchableOpacity className="items-center h-11 w-64 bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-sm text-sm py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                  <Text className="text-white text-sm font-semibold">Login</Text>
+                </TouchableOpacity>
                 
             </View>
           </View>
@@ -83,6 +84,6 @@ const LoginScreen = () => {
 }
 
 
-export default LoginScreen
+export default RegisterScreen
 
 

@@ -8,6 +8,7 @@ import SplashScreen from './screens/SplashScreen';
 // SplashScreen.preventAutoHideAsync();
 import { useState,useEffect } from 'react';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 const Stack= createNativeStackNavigator();
 
@@ -32,7 +33,8 @@ export default function App() {
     {isLoading ? <SplashScreen /> : <Stack.Navigator 
         screenOptions={{ headerShown: false }}>
 
-        <Stack.Screen name="Home" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
         
       </Stack.Navigator>}
       

@@ -9,6 +9,10 @@ module.exports = {
     extend: {
       colors: {
         'bioPrincipal': '#42c248',
+        'bioBrancoPrincipal' : '#f5f5f5',
+        'bioTextoCinza' : '#dcdcdc',
+        'bioTextoCinzaEscuro' : '#b6b6b6',
+        'bioTextoCinzaMaisEscuro' : '#1c1c1c',
         
       },
     },
