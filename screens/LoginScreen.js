@@ -20,6 +20,9 @@ const LoginScreen = () => {
   const esqueceuSenha = () => {
     navigation.navigate('ForgotPassword')
   }
+  const menu = () => {
+    navigation.navigate('Menu')
+  }
 
   return (
     <>
@@ -70,7 +73,7 @@ const LoginScreen = () => {
           </View>
           <View>
             <View className="flex-row rounded-sm">
-                <LoginButton title="Login"></LoginButton>
+                <LoginButton press={menu} title="Login"></LoginButton>
                 
             </View>
           </View>
