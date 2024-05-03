@@ -6,7 +6,7 @@ import email from '../assets/email3.png'
 import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 
-const RegisterScreen = () => {
+const ForgotPassword = () => {
 
   const navigation = useNavigation();
 
@@ -42,19 +42,7 @@ const RegisterScreen = () => {
               <TextInput placeholder="Email" maxLength={40} className="w-64 h-10 p-1"></TextInput>
             </View>
 
-            <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-              <View className="w-2 justify-center items-center">
-                
-              </View>
-              <TextInput secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
-            </View>
-
-            <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-              <View className="w-2 justify-center items-center">
-                
-              </View>
-              <TextInput secureTextEntry={true} placeholder="Confirmar Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
-            </View>
+            
             
             
 
@@ -70,7 +58,7 @@ const RegisterScreen = () => {
           </View>
           <View>
             <View className="flex-row rounded-sm">
-                <LoginButton title="Cadastrar"></LoginButton>
+                <LoginButton title="Enviar"></LoginButton>
                 
             </View>
           </View>
@@ -94,6 +82,6 @@ const RegisterScreen = () => {
 }
 
 
-export default RegisterScreen
+export default ForgotPassword
 
 

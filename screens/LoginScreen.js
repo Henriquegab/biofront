@@ -4,11 +4,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png'
 import email from '../assets/email3.png'
 import LoginButton from '../components/LoginButton';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
 
 
+  const navigation = useNavigation();
+
   const [text, onChangeText] = React.useState('Email');
+
+  const cadastrar = () => {
+    navigation.navigate('Register')
+  }
+
+  const esqueceuSenha = () => {
+    navigation.navigate('ForgotPassword')
+  }
 
   return (
     <>
@@ -51,7 +62,7 @@ const LoginScreen = () => {
           </View>
           <View className="flex-2 w-80 items-end pr-6">
             <View className="flex-row rounded-sm pb-8">
-              <TouchableOpacity>
+              <TouchableOpacity onPress={esqueceuSenha}>
                 <Text className="text-blue-800" >Esqueceu sua senha?</Text>
               </TouchableOpacity>
               
@@ -59,7 +70,7 @@ const LoginScreen = () => {
           </View>
           <View>
             <View className="flex-row rounded-sm">
-                <LoginButton></LoginButton>
+                <LoginButton title="Login"></LoginButton>
                 
             </View>
           </View>
@@ -67,7 +78,7 @@ const LoginScreen = () => {
             <View className="flex-row rounded-sm mt-4">
                 
                   <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
-                  <TouchableOpacity><Text className="text-blue-800 font-semibold">Cadastre-se</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={cadastrar}><Text className="text-blue-800 font-semibold">Cadastre-se</Text></TouchableOpacity>
                 
                 
             </View>

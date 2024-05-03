@@ -9,6 +9,7 @@ import SplashScreen from './screens/SplashScreen';
 import { useState,useEffect } from 'react';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ForgotPassword from './screens/ForgotPassword';
 
 const Stack= createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ export default function App() {
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         
       </Stack.Navigator>}
       
