@@ -11,8 +11,17 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import MainMenu from './screens/MainMenu';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { TransitionPresets } from '@react-navigation/native-stack';
+
+const Tab = createBottomTabNavigator();
 
 const Stack= createNativeStackNavigator();
+
+function shouldShowHeader(route) {
+  // Verifica se a rota atual é diferente das telas de login, registro e esqueci minha senha
+  return route.name !== 'Login' && route.name !== 'Register' && route.name !== 'ForgotPassword';
+}
 
 export default function App() {
   
@@ -32,15 +41,30 @@ export default function App() {
 
   return (
     <NavigationContainer>
-    {isLoading ? <SplashScreen /> : <Stack.Navigator 
-        screenOptions={{ headerShown: false }}>
+    {isLoading ? <SplashScreen /> : <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarStyle: { backgroundColor: '#ff5f01' }, // Defina a cor de fundo da barra de navegação
+        headerStyle: { backgroundColor: '#ff5f01' }, // Defina a cor de fundo do cabeçalho
+        headerTitleStyle: { color: 'white' },
+        tabBarShowLabel: false,
+        headerShown: shouldShowHeader(route),
+      })}
+    >
 
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="Menu" component={MainMenu} />
+
+
+        <Tab.Screen name="Login" component={LoginScreen} options={{
+                tabBarButton: () => null, // Isso faz com que a tela seja invisível no tab bar
+              }}/>
+        <Tab.Screen name="Register" component={RegisterScreen} options={{
+                tabBarButton: () => null, // Isso faz com que a tela seja invisível no tab bar
+              }}/>
+        <Tab.Screen name="ForgotPassword" component={ForgotPassword} options={{
+                tabBarButton: () => null, // Isso faz com que a tela seja invisível no tab bar
+              }} />
+        <Tab.Screen name="Menu" component={MainMenu} />
         
-      </Stack.Navigator>}
+      </Tab.Navigator>}
       
     </NavigationContainer>
   );
