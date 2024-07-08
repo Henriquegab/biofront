@@ -6,7 +6,7 @@ const MainMenu = () => {
   return (
     <>
     
-        <SafeAreaView className="bg-bioPrincipal h-14">
+        <SafeAreaView className="bg-bioPrincipal">
             
         </SafeAreaView>
         <ScrollView>

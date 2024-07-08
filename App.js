@@ -11,6 +11,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import MainMenu from './screens/MainMenu';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,18 +30,67 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#ff5f01' },
-        headerStyle: { backgroundColor: '#ff5f01' },
+        tabBarStyle: { backgroundColor: '#42c248' },
+        headerStyle: { backgroundColor: '#42c248' },
         headerTitleStyle: { color: 'white' },
         tabBarShowLabel: false,
       }}
     >
-      <Tab.Screen name="Menu" component={MainMenu} />
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Menu"
+        component={MainMenu}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.focusedIcon : styles.icon}>
+              <Icon name="home" color={focused ? "#42c248" : "white"} size={24} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.focusedIcon : styles.icon}>
+              <Icon name="pencil" color={focused ? "#42c248" : "white"} size={24} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={focused ? styles.focusedIcon : styles.icon}>
+              <Icon name="user" color={focused ? "#42c248" : "white"} size={24} />
+            </View>
+          ),
+        }}
+      />
+      {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
       {/* Adicione outras telas aqui */}
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  focusedIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderWidth: 2,
+    // borderColor: 'black',
+    backgroundColor: 'white',
+    borderRadius: 12,
+    width: 32,
+    height: 32
+  },
+});
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
