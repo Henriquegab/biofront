@@ -1,11 +1,12 @@
 import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
+import CardProfileComponent from '../components/CardProfileComponent'
 
 const HomeScreen = () => {
   return (
     <SafeAreaView>
         <View>
-            <Text className="font-bold">HomeScreen</Text>
+            <CardProfileComponent/>
         </View>
     </SafeAreaView>
     

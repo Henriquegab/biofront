@@ -9,7 +9,7 @@ const PostAnimal = () => {
   
   const [photo, setPhoto] = useState(null);
 
-//   const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = data => {
     console.log(data);
@@ -45,7 +45,11 @@ const PostAnimal = () => {
     <ScrollView contentContainerStyle={styles.container}>
 
         <CardComponent>
-                    {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+            <View className="mb-4 items-center">
+                {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+
+            </View>
+                    
 
             <View className="flex-row space-x-6 justify-center">
                 <View>
@@ -66,7 +70,7 @@ const PostAnimal = () => {
         </CardComponent>
 
       <View>
-                {/* <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} />  */}
+                <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} /> 
         </View>
 
       
@@ -77,13 +81,13 @@ const PostAnimal = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
     fontSize: 16,
-    marginVertical: 8,
+    marginVertical: 4,
   },
   input: {
     width: '100%',
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
   },
   photo: {
     width: 200,
-    height: 200,
+    height: 150,
     marginTop: 16,
   },
 });
