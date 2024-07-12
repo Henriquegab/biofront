@@ -3,6 +3,7 @@ import { View, TextInput, Button, Image, Text, StyleSheet, ScrollView } from 're
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import CampoText from '../components/CampoText';
+import CardComponent from '../components/CardComponent';
 
 const PostAnimal = () => {
   
@@ -43,8 +44,8 @@ const PostAnimal = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
-        <View className="border-2 h-auto w-11/12 m-2">
-                {photo && <Image source={{ uri: photo }} style={styles.photo} />}
+        <CardComponent>
+                    {photo && <Image source={{ uri: photo }} style={styles.photo} />}
 
             <View className="flex-row space-x-6 justify-center">
                 <View>
@@ -62,54 +63,7 @@ const PostAnimal = () => {
             <CampoText placeholder="Animal"></CampoText>
             <CampoText placeholder="Administrador"></CampoText>
 
-        </View>
-
-        
-        
-      
-
-      {/* <Text style={styles.label}>Espécie</Text>
-      <Controller
-        control={control}
-        name="species"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        rules={{ required: true }}
-      />
-      {errors.species && <Text style={styles.error}>Campo obrigatório.</Text>}
-      <Controller
-        control={control}
-        name="name"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        rules={{ required: true }}
-      />
-      {errors.name && <Text style={styles.error}>Campo obrigatório.</Text>}
-
-      <Text style={styles.label}>Espécie</Text>
-      <Controller
-        control={control}
-        name="species"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        rules={{ required: true }}
-      />
-      {errors.species && <Text style={styles.error}>Campo obrigatório.</Text>} */}
+        </CardComponent>
 
       <View>
                 {/* <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} />  */}
