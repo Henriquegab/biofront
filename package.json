@@ -20,9 +20,11 @@
     "expo-status-bar": "~1.11.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-native": "0.73.6",
     "react-native-linear-gradient": "^2.8.3",
-    "react-native-vector-icons": "^10.1.0"
+    "react-native-vector-icons": "^10.1.0",
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

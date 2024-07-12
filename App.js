@@ -12,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import MainMenu from './screens/MainMenu';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import PostAnimal from './screens/PostAnimal';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,8 +49,8 @@ function MainTabs() {
         }}
       />
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Cadastro de animal"
+        component={PostAnimal}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={focused ? styles.focusedIcon : styles.icon}>
