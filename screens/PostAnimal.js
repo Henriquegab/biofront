@@ -4,16 +4,25 @@ import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import CampoText from '../components/CampoText';
 import CardComponent from '../components/CardComponent';
+import Toast from 'react-native-root-toast';
 
 const PostAnimal = () => {
   
   const [photo, setPhoto] = useState(null);
 
+  const [campo1, setCampo1] = useState('');
+  const [campo2, setCampo2] = useState('');
+  const [campo3, setCampo3] = useState('');
+
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = data => {
-    console.log(data);
-    // Aqui você pode enviar os dados para sua API ou realizar qualquer outra ação necessária
+    if(campo1 == "" || campo2 == "" || campo3 == "" || photo == null){
+      Toast.show("Preencha todos os campos!")
+    }
+    else{
+      // requisição para api ou salvamento no celular
+    }
   };
 
   const selectPhoto = async () => {
@@ -63,15 +72,17 @@ const PostAnimal = () => {
             </View>
 
 
-            <CampoText placeholder="Espécie"></CampoText>
-            <CampoText placeholder="Animal"></CampoText>
-            <CampoText placeholder="Administrador"></CampoText>
+            <CampoText mudarValor={(value) => setCampo1(value)} placeholder="Espécie"></CampoText>
+            <CampoText mudarValor={(value) => setCampo2(value)} placeholder="Animal"></CampoText>
+            <CampoText mudarValor={(value) => setCampo3(value)} placeholder="Administrador"></CampoText>
+
+            <View>
+                <Button className="" title="Cadastrar" onPress={handleSubmit(onSubmit)} /> 
+            </View>
 
         </CardComponent>
 
-      <View>
-                <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} /> 
-        </View>
+      
 
       
     </ScrollView>

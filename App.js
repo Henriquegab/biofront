@@ -13,66 +13,78 @@ import ForgotPassword from './screens/ForgotPassword';
 import MainMenu from './screens/MainMenu';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PostAnimal from './screens/PostAnimal';
+import { RootSiblingParent } from 'react-native-root-siblings';
+
+import store from './redux/store'
+import { Provider } from 'react-redux'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <RootSiblingParent>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </RootSiblingParent>
+    </Provider>
   );
 }
 
 function MainTabs() {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: { backgroundColor: '#42c248' },
-        headerStyle: { backgroundColor: '#42c248' },
-        headerTitleStyle: { color: 'white' },
-        tabBarShowLabel: false,
-      }}
-    >
-      <Tab.Screen
-        name="Menu"
-        component={MainMenu}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.focusedIcon : styles.icon}>
-              <Icon name="home" color={focused ? "#42c248" : "white"} size={24} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Cadastro de animal"
-        component={PostAnimal}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.focusedIcon : styles.icon}>
-              <Icon name="pencil" color={focused ? "#42c248" : "white"} size={24} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Perfil"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={focused ? styles.focusedIcon : styles.icon}>
-              <Icon name="user" color={focused ? "#42c248" : "white"} size={24} />
-            </View>
-          ),
-        }}
-      />
-      {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
-      {/* Adicione outras telas aqui */}
-    </Tab.Navigator>
+    <Provider store={store}>
+      <RootSiblingParent>
+        <Tab.Navigator
+          screenOptions={{
+            tabBarStyle: { backgroundColor: '#42c248' },
+            headerStyle: { backgroundColor: '#42c248' },
+            headerTitleStyle: { color: 'white' },
+            tabBarShowLabel: false,
+          }}
+        >
+          <Tab.Screen
+            name="Menu"
+            component={MainMenu}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View style={focused ? styles.focusedIcon : styles.icon}>
+                  <Icon name="home" color={focused ? "#42c248" : "white"} size={24} />
+                </View>
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Cadastro de animal"
+            component={PostAnimal}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View style={focused ? styles.focusedIcon : styles.icon}>
+                  <Icon name="pencil" color={focused ? "#42c248" : "white"} size={24} />
+                </View>
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Perfil"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <View style={focused ? styles.focusedIcon : styles.icon}>
+                  <Icon name="user" color={focused ? "#42c248" : "white"} size={24} />
+                </View>
+              ),
+            }}
+          />
+          {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
+          {/* Adicione outras telas aqui */}
+        </Tab.Navigator>
+      </RootSiblingParent>
+    </Provider>
   );
 }
 

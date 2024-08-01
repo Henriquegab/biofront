@@ -5,9 +5,14 @@ import logo from '../assets/logos.png';
 import email from '../assets/email3.png';
 import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
 
 const LoginScreen = ({ navigation }) => {
+
+  const token = useDispatch()
+
   const handleLogin = () => {
+    token("oi")
     // Supondo que a autenticação seja bem-sucedida, navegue para a tela principal
     navigation.replace('Main');
   };
@@ -15,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
   const [text, onChangeText] = React.useState('Email');
 
   const cadastrar = () => {
+    
     navigation.navigate('Register');
   };
 
