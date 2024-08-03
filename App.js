@@ -15,15 +15,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import PostAnimal from './screens/PostAnimal';
 import { RootSiblingParent } from 'react-native-root-siblings';
 
-import store from './redux/store'
-import { Provider } from 'react-redux'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
-    <Provider store={store}>
+    
       <RootSiblingParent>
         <Stack.Navigator>
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
@@ -31,13 +29,13 @@ function AuthStack() {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
         </Stack.Navigator>
       </RootSiblingParent>
-    </Provider>
+    
   );
 }
 
 function MainTabs() {
   return (
-    <Provider store={store}>
+    
       <RootSiblingParent>
         <Tab.Navigator
           screenOptions={{
@@ -84,7 +82,7 @@ function MainTabs() {
           {/* Adicione outras telas aqui */}
         </Tab.Navigator>
       </RootSiblingParent>
-    </Provider>
+    
   );
 }
 

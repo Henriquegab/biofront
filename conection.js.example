@@ -1,0 +1,3 @@
+const apiUrl = "https://localhost.com"
+
+export default apiUrl;
