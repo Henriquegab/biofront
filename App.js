@@ -14,6 +14,7 @@ import MainMenu from './screens/MainMenu';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PostAnimal from './screens/PostAnimal';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import "./conection";
 
 
 const Stack = createNativeStackNavigator();

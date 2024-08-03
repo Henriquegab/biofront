@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, ButtonText, Pressable, TouchableOpacity, StatusBar, ActivityIndicator, } from 'react-native';
+import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png';
 import email from '../assets/email3.png';
@@ -9,10 +9,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
 
-  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleLogin = () => {
     
+    console.log(password)
     // Supondo que a autenticação seja bem-sucedida, navegue para a tela principal
     navigation.replace('Main');
   };
@@ -42,12 +46,12 @@ const LoginScreen = ({ navigation }) => {
         <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
           <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
             <View className="w-2 justify-center items-center" />
-            <TextInput placeholder="Email" maxLength={40} className="w-64 h-10 p-1" />
+            <TextInput onChangeText={email => setEmail(email)} value={email} placeholder="Email" maxLength={40} className="w-64 h-10 p-1" />
           </View>
 
           <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
             <View className="w-2 justify-center items-center" />
-            <TextInput secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1" />
+            <TextInput onChangeText={password => setPassword(password)} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1" />
           </View>
         </View>
 
@@ -66,6 +70,11 @@ const LoginScreen = ({ navigation }) => {
         <View className="flex-row rounded-sm mt-4">
           <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
           <TouchableOpacity onPress={cadastrar}>
+            {loading ? (
+              <ActivityIndicator size="small" color="#FFF" />
+            ) : (
+              <ButtonText>Prosseguir</ButtonText>
+            )}
             <Text className="text-blue-800 font-semibold">Cadastre-se</Text>
           </TouchableOpacity>
         </View>
