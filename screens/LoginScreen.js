@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
 
    async function handleLogin() {
 
-    // console.log(global.apiUrl)
+
 
     if (email.length === 0) return;
 
@@ -46,29 +46,17 @@ const LoginScreen = ({ navigation }) => {
 
 
       });
-      // console.log("passei aq")
-      // console.log(response)
-      
-      // console.log(response)
 
-      
-      
-      
-
-      
     } catch (error) {
       setLoading(false);
       console.error('Erro ao fazer a requisição POST:', error);
     }
 
     setLoading(false);
-    
-    // console.log(password)
-    // Supondo que a autenticação seja bem-sucedida, navegue para a tela principalr
+  
     
   };
 
-  // const [text, onChangeText] = React.useState('Email');
 
   const cadastrar = () => {
     
@@ -83,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
       <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="orange" />
+        <ActivityIndicator size="large" color="green" />
       </View>
     );
   }
@@ -95,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
       </SafeAreaView>
 
       <View className="flex-1 items-center justify-center bg-bioBrancoPrincipal">
-        {loading ? <ActivityIndicator size="small" color="#FFF" /> : null}
+        
         <View className="w-64 items-center">
           <Image className="w-28 h-28" source={logo} />
           <Text className="font-bold text-black text-lg">BioFront</Text>
