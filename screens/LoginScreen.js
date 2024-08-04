@@ -7,6 +7,7 @@ import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -45,6 +46,10 @@ const LoginScreen = ({ navigation }) => {
         }
 
 
+      }).catch(function (error) {
+        
+        Toast.show(error.response.data.message)
+        
       });
 
     } catch (error) {
