@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, ButtonText, Pressable, TouchableOpacity, StatusBar, ActivityIndicator, } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, ButtonText, Pressable, TouchableOpacity, StatusBar, ActivityIndicator, Button, } from 'react-native';
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png';
@@ -6,22 +6,69 @@ import email from '../assets/email3.png';
 import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const handleLogin = () => {
+   async function handleLogin() {
+
+    // console.log(global.apiUrl)
+
+    if (email.length === 0) return;
+
+    setLoading(true);
+
+    try {
+
+      const credentials = {
+        email: email,
+        password: password
+      }
+
+      const res = await axios.post(global.apiUrl + '/api/login', credentials).then(function (res_api) {
+        
+        setResponse(res_api.data);
+
+        try {
+          AsyncStorage.setItem('token', res_api.data.data.token);
+          setLoading(false);
+          navigation.replace('Main');
+        } catch (e) {
+          setLoading(false);
+          console.error('Erro ao salvar o token:', e);
+        }
+
+
+      });
+      // console.log("passei aq")
+      // console.log(response)
+      
+      // console.log(response)
+
+      
+      
+      
+
+      
+    } catch (error) {
+      setLoading(false);
+      console.error('Erro ao fazer a requisição POST:', error);
+    }
+
+    setLoading(false);
     
-    console.log(password)
-    // Supondo que a autenticação seja bem-sucedida, navegue para a tela principal
-    navigation.replace('Main');
+    // console.log(password)
+    // Supondo que a autenticação seja bem-sucedida, navegue para a tela principalr
+    
   };
 
-  const [text, onChangeText] = React.useState('Email');
+  // const [text, onChangeText] = React.useState('Email');
 
   const cadastrar = () => {
     
@@ -32,6 +79,15 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('ForgotPassword');
   };
 
+  if (loading) {
+    // Exibe um indicador de carregamento enquanto espera a resposta da API
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="orange" />
+      </View>
+    );
+  }
+
   return (
     <>
       <SafeAreaView>
@@ -39,6 +95,7 @@ const LoginScreen = ({ navigation }) => {
       </SafeAreaView>
 
       <View className="flex-1 items-center justify-center bg-bioBrancoPrincipal">
+        {loading ? <ActivityIndicator size="small" color="#FFF" /> : null}
         <View className="w-64 items-center">
           <Image className="w-28 h-28" source={logo} />
           <Text className="font-bold text-black text-lg">BioFront</Text>
@@ -70,13 +127,10 @@ const LoginScreen = ({ navigation }) => {
         <View className="flex-row rounded-sm mt-4">
           <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
           <TouchableOpacity onPress={cadastrar}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#FFF" />
-            ) : (
-              <ButtonText>Prosseguir</ButtonText>
-            )}
+            
             <Text className="text-blue-800 font-semibold">Cadastre-se</Text>
           </TouchableOpacity>
+          
         </View>
       </View>
     </>
