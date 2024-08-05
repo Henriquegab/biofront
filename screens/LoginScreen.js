@@ -95,13 +95,13 @@ const LoginScreen = ({ navigation }) => {
         </View>
         <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
           <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-            <View className="w-2 justify-center items-center" />
-            <TextInput onChangeText={email => setEmail(email)} value={email} placeholder="Email" maxLength={40} className="w-64 h-10 p-1" />
+            {/* <View className="w-2 justify-center items-center" /> */}
+            <TextInput onChangeText={email => setEmail(email)} value={email} placeholder="Email" maxLength={40} className="w-72 h-10 px-2" />
           </View>
 
           <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-            <View className="w-2 justify-center items-center" />
-            <TextInput onChangeText={password => setPassword(password)} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1" />
+            {/* <View className="w-2 justify-center items-center" /> */}
+            <TextInput onChangeText={password => setPassword(password)} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-72 h-10 px-2" />
           </View>
         </View>
 
