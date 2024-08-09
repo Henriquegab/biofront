@@ -1,19 +1,80 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, Button, Pressable, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, {useState} from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png'
 import email from '../assets/email3.png'
 import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-root-toast';
+import axios from 'axios';
 
 const RegisterScreen = () => {
 
   const navigation = useNavigation();
 
-  const [text, onChangeText] = React.useState('Email');
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  const handleRegister = async () => {
+      if(password != confirmPassword){
+        Toast.show("O campo senha e confirmar senha devem ser iguais!");
+        return;
+      }
+      if(password.length < 6){
+        Toast.show("A senha deve conter no mínimo 6 dígitos!");
+        return;
+      }
+      if(name.length < 2){
+        Toast.show("O nome deve conter no mínimo 2 dígitos!");
+        return;
+      }
+      setLoading(true);
+
+      try {
+
+        const credentials = {
+          email: email,
+          password: password,
+          name: name
+        }
+  
+        const res = await axios.post(global.apiUrl + '/api/register', credentials).then(function (res_api) {
+          
+          setResponse(res_api.data);
+          Toast.show(res_api.data.message);
+          navigation.navigate('Login')
+  
+  
+        }).catch(function (error) {
+          
+          Toast.show(error.response.data.message)
+          
+        });
+  
+      } catch (error) {
+        setLoading(false);
+        console.error('Erro ao fazer a requisição POST:', error);
+      }
+  
+      setLoading(false);
+  }
 
   const login = () => {
         navigation.navigate('Login')
+  }
+
+  if (loading) {
+    // Exibe um indicador de carregamento enquanto espera a resposta da API
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="green" />
+      </View>
+    );
   }
 
   return (
@@ -39,21 +100,28 @@ const RegisterScreen = () => {
               <View className="w-2 justify-center items-center">
                 
               </View>
-              <TextInput placeholder="Email" maxLength={40} className="w-64 h-10 p-1"></TextInput>
+              <TextInput value={name} onChangeText={name => setName(name)} placeholder="Nome" maxLength={40} className="w-64 h-10 p-1"></TextInput>
             </View>
 
             <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
               <View className="w-2 justify-center items-center">
                 
               </View>
-              <TextInput secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
+              <TextInput value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={40} className="w-64 h-10 p-1"></TextInput>
             </View>
 
             <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
               <View className="w-2 justify-center items-center">
                 
               </View>
-              <TextInput secureTextEntry={true} placeholder="Confirmar Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
+              <TextInput secureTextEntry={true} onChangeText={password => setPassword(password)} value={password} placeholder="Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
+            </View>
+
+            <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
+              <View className="w-2 justify-center items-center">
+                
+              </View>
+              <TextInput secureTextEntry={true} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} value={confirmPassword} placeholder="Confirmar Senha" maxLength={40} className="w-64 h-10 p-1"></TextInput>
             </View>
             
             
@@ -70,7 +138,7 @@ const RegisterScreen = () => {
           </View>
           <View>
             <View className="flex-row rounded-sm">
-                <LoginButton title="Cadastrar"></LoginButton>
+                <LoginButton press={handleRegister} title="Cadastrar"></LoginButton>
                 
             </View>
           </View>
