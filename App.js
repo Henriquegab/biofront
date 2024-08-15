@@ -15,6 +15,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import PostAnimal from './screens/PostAnimal';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import "./conection";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-root-toast';
+import axios from 'axios';
 
 
 const Stack = createNativeStackNavigator();
@@ -109,10 +112,40 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Simulate loading process
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Adjust the time as needed
+    const fetchData = async () => {
+      
+        const token = await AsyncStorage.getItem('token');
+        
+
+        if (!token) {
+          setIsLoading(false);
+          return;
+        }
+
+        const credentials = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Supondo que o token seja usado no header de autenticação
+          }
+        };
+
+        const res = await axios.get(global.apiUrl + '/api/user/me', credentials).then(function (res_api) {
+        
+          // console.log(res_api.data)
+          if (res_api.data.success == true) {
+            // console.log(1)
+            setIsAuthenticated(true);
+          }
+
+
+        }).catch(function (error) {
+
+        }).finally(function(){
+          setIsLoading(false)
+
+        })
+      }
+
+    fetchData();
   }, []);
 
   const handleLogin = () => {

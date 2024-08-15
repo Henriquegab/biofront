@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, ButtonText, Pressable, TouchableOpacity, StatusBar, ActivityIndicator, Button, } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, ButtonText, Pressable, TouchableOpacity, StatusBar, ActivityIndicator, Button, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from '../assets/logos.png';
@@ -83,49 +83,49 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <>
-      <SafeAreaView>
-        {/* Seu conteúdo aqui */}
-      </SafeAreaView>
-
-      <View className="flex-1 items-center justify-center bg-bioBrancoPrincipal">
-        
-        <View className="w-64 items-center">
-          <Image className="w-28 h-28" source={logo} />
-          <Text className="font-bold text-black text-lg">BioFront</Text>
-        </View>
-        <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
-          <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-            {/* <View className="w-2 justify-center items-center" /> */}
-            <TextInput onChangeText={email => setEmail(email)} value={email} placeholder="Email" maxLength={40} className="w-72 h-10 px-2" />
-          </View>
-
-          <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-            {/* <View className="w-2 justify-center items-center" /> */}
-            <TextInput onChangeText={password => setPassword(password)} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-72 h-10 px-2" />
-          </View>
-        </View>
-
-        <View className="flex-2 w-80 items-end pr-6">
-          <View className="flex-row rounded-sm pb-8">
-            <TouchableOpacity onPress={esqueceuSenha}>
-              <Text className="text-blue-800">Esqueceu sua senha?</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View className="flex-row rounded-sm">
-          <LoginButton press={handleLogin} title="Login" />
-        </View>
-
-        <View className="flex-row rounded-sm mt-4">
-          <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
-          <TouchableOpacity onPress={cadastrar}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        >
+          <View className="flex-1 items-center justify-center bg-bioBrancoPrincipal">
             
-            <Text className="text-blue-800 font-semibold">Cadastre-se</Text>
-          </TouchableOpacity>
-          
-        </View>
-      </View>
+            <View className="w-64 items-center">
+              <Image className="w-28 h-28" source={logo} />
+              <Text className="font-bold text-black text-lg">BioFront</Text>
+            </View>
+            <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
+              <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
+                <TextInput onChangeText={setEmail} value={email} placeholder="Email" maxLength={40} className="w-72 h-10 px-2" />
+              </View>
+
+              <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
+                <TextInput onChangeText={setPassword} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-72 h-10 px-2" />
+              </View>
+            </View>
+
+            <View className="flex-2 w-80 items-end pr-6">
+              <View className="flex-row rounded-sm pb-8">
+                <TouchableOpacity onPress={esqueceuSenha}>
+                  <Text className="text-blue-800">Esqueceu sua senha?</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View className="flex-row rounded-sm">
+              <LoginButton press={handleLogin} title="Login" />
+            </View>
+
+            <View className="flex-row rounded-sm mt-4">
+              <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
+              <TouchableOpacity onPress={cadastrar}>
+                <Text className="text-blue-800 font-semibold">Cadastre-se</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </>
   );
 };
