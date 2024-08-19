@@ -43,10 +43,12 @@ function MainTabs() {
       <RootSiblingParent>
         <Tab.Navigator
           screenOptions={{
-            tabBarStyle: { backgroundColor: '#42c248' },
-            headerStyle: { backgroundColor: '#42c248' },
+            tabBarStyle: { backgroundColor: '#18181b', borderTopWidth: 0  },
+            headerStyle: { backgroundColor: '#18181b' },
             headerTitleStyle: { color: 'white' },
-            tabBarShowLabel: false,
+            tabBarShowLabel: true,
+            headerShown: false,
+            tabBarActiveTintColor: '#1DB954'
           }}
         >
           <Tab.Screen
@@ -55,7 +57,7 @@ function MainTabs() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="home" color={focused ? "#42c248" : "white"} size={24} />
+                  <Icon name="home" color={focused ? "#1DB954" : "white"} size={24} />
                 </View>
               ),
             }}
@@ -66,7 +68,7 @@ function MainTabs() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="pencil" color={focused ? "#42c248" : "white"} size={24} />
+                  <Icon name="pencil" color={focused ? "#1DB954" : "white"} size={24} />
                 </View>
               ),
             }}
@@ -77,7 +79,7 @@ function MainTabs() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="user" color={focused ? "#42c248" : "white"} size={24} />
+                  <Icon name="user" color={focused ? "#1DB954" : "white"} size={24} />
                 </View>
               ),
             }}
@@ -100,10 +102,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // borderWidth: 2,
     // borderColor: 'black',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     borderRadius: 12,
     width: 32,
-    height: 32
+    height: 32,
+    
   },
 });
 

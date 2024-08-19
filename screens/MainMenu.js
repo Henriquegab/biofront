@@ -6,26 +6,27 @@ const MainMenu = () => {
   return (
     <>
     
-        <SafeAreaView className="bg-bioPrincipal">
+        <SafeAreaView className="flex-1 bg-zinc-900">
             
+        
+          <ScrollView className="">
+            <View className="flex-col px-1 pt-5 ">
+              <MenuButton title="Encontrei um rastro de animal" animal="Formiga" especie="inseto" autor="4 de agosto 19:28" image={require('../assets/fumiga.jpg')}></MenuButton>
+              <MenuButton title="Macaco encontrado na floresta" animal="Macaco" especie="Lêmure" autor="4 de agosto 19:28" image={require('../assets/macaco.jpg')}></MenuButton>
+              <MenuButton title="Leão bugado" especie="mamífero" animal="Leão" autor="4 de agosto 19:28" image={require('../assets/leao.jpg')}></MenuButton>
+              
+              
+              
+              
+              
+              
+            </View>
+            
+                  
+                  
+            
+          </ScrollView>
         </SafeAreaView>
-        <ScrollView>
-          <View className="flex-1 flex-col px-1 pt-5">
-            <MenuButton title="Formiga" especie="inseto" autor="4 de agosto 19:28, henrique gabriel" image={require('../assets/fumiga.jpg')}></MenuButton>
-            <MenuButton title="macaco" especie="Lêmure" autor="4 de agosto 19:28, henrique gabriel" image={require('../assets/macaco.jpg')}></MenuButton>
-            <MenuButton title="Leão" especie="mamífero" autor="4 de agosto 19:28, henrique gabriel" image={require('../assets/leao.jpg')}></MenuButton>
-            
-            
-            
-            
-            
-            
-          </View>
-          
-                
-                
-          
-        </ScrollView>
     </>
   )
 }

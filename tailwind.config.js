@@ -13,6 +13,8 @@ module.exports = {
         'bioTextoCinza' : '#dcdcdc',
         'bioTextoCinzaEscuro' : '#b6b6b6',
         'bioTextoCinzaMaisEscuro' : '#1c1c1c',
+        'bioVerde' : '#1DB954',
+        'bioCinza': '#9c9c9c'
         
       },
     },

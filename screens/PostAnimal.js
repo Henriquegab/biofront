@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Image, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, TextInput, Button, Image, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'expo-image-picker';
 import CampoText from '../components/CampoText';
@@ -81,6 +81,10 @@ const PostAnimal = () => {
   };
 
   return (
+
+    <SafeAreaView>
+
+    
     <ScrollView contentContainerStyle={styles.container}>
 
         <CardComponent>
@@ -116,6 +120,7 @@ const PostAnimal = () => {
 
       <CampoModal mostrarModal={mostrarModal}></CampoModal>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
