@@ -84,6 +84,14 @@ function MainTabs() {
               ),
             }}
           />
+          <Tab.Screen
+            name="Mudar senha"
+            component={ForgotPassword}
+            options={{
+              tabBarVisible: false,
+              tabBarButton: () => null
+            }}
+          />
           {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
           {/* Adicione outras telas aqui */}
         </Tab.Navigator>
