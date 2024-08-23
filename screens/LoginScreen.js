@@ -48,7 +48,9 @@ const LoginScreen = ({ navigation }) => {
 
       }).catch(function (error) {
         
-        Toast.show(error.response.data.message)
+        Toast.show(error.response.data.message, {
+          position: 70
+        })
         
       });
 
@@ -75,59 +77,69 @@ const LoginScreen = ({ navigation }) => {
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center bg-zinc-900">
         <ActivityIndicator size="large" color="green" />
       </View>
     );
   }
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-        >
-          <View className="flex-1 items-center justify-center bg-bioBrancoPrincipal">
+    <SafeAreaView className="flex-1 bg-zinc-900">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1 justify-center px-8"
+      >
+        <View className="items-center mb-8">
+          <Image
+            source={require('../assets/logo.jpg')}
+            className="w-16 h-16"
+          />
+        </View>
+
+        <View className="mb-6">
+          <Text className="text-white text-2xl font-bold text-center">BIOFRONT</Text>
+          <View className="flex-row justify-center space-x-4 mt-2">
+            <View className="border-b border-bioVerde">
+                <Text className="text-white font-semibold">ENTRAR</Text>
+            </View>
             
-            <View className="w-64 items-center">
-              <Image className="w-28 h-28" source={logo} />
-              <Text className="font-bold text-black text-lg">BioFront</Text>
-            </View>
-            <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
-              <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-                <TextInput onChangeText={setEmail} value={email} placeholder="Email" maxLength={40} className="w-72 h-10 px-2" />
-              </View>
-
-              <View className="flex-row rounded-sm border-2 border-bioTextoCinzaEscuro">
-                <TextInput onChangeText={setPassword} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40} className="w-72 h-10 px-2" />
-              </View>
-            </View>
-
-            <View className="flex-2 w-80 items-end pr-6">
-              <View className="flex-row rounded-sm pb-8">
-                <TouchableOpacity onPress={esqueceuSenha}>
-                  <Text className="text-blue-800">Esqueceu sua senha?</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View className="flex-row rounded-sm">
-              <LoginButton press={handleLogin} title="Login" />
-            </View>
-
-            <View className="flex-row rounded-sm mt-4">
-              <Text className="text-bioTextoCinzaMaisEscuro text-sm">Não tem uma conta? </Text>
-              <TouchableOpacity onPress={cadastrar}>
-                <Text className="text-blue-800 font-semibold">Cadastre-se</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={cadastrar}>
+              <Text className="text-gray-400">CADASTRAR</Text>
+            </TouchableOpacity>
+            
           </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </>
+        </View>
+
+        <TextInput
+          onChangeText={setEmail} value={email} placeholder="Email" maxLength={40}
+          // value={username}
+          // onChangeText={setUsername}
+          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          placeholderTextColor="#9CA3AF"
+        />
+
+        <TextInput
+          onChangeText={setPassword} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40}
+          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          placeholderTextColor="#9CA3AF"
+        />
+
+        
+
+        <TouchableOpacity
+          className="bg-bioVerde rounded-full py-4 items-center"
+          onPress={handleLogin}
+        >
+          <Text className="text-white font-bold">ENTRAR</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={esqueceuSenha} className="mt-4">
+          <Text className="text-gray-400 text-center">Esqueceu a senha?</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
+
 
 export default LoginScreen;

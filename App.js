@@ -18,6 +18,8 @@ import "./conection";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
+import ChangePassword from './screens/ChangePassword';
+import EditProfile from './screens/EditProfile';
 
 
 const Stack = createNativeStackNavigator();
@@ -86,7 +88,15 @@ function MainTabs() {
           />
           <Tab.Screen
             name="Mudar senha"
-            component={ForgotPassword}
+            component={ChangePassword}
+            options={{
+              tabBarVisible: false,
+              tabBarButton: () => null
+            }}
+          />
+          <Tab.Screen
+            name="Editar perfil"
+            component={EditProfile}
             options={{
               tabBarVisible: false,
               tabBarButton: () => null
@@ -170,14 +180,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (
+      {/* {isAuthenticated ? (
         <MainTabs />
-      ) : (
+      ) : ( */}
         <Stack.Navigator>
           <Stack.Screen name="Auth" component={AuthStack} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
         </Stack.Navigator>
-      )}
+      {/* )} */}
     </NavigationContainer>
   );
 }
