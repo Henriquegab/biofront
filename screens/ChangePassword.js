@@ -85,8 +85,17 @@ const ChangePassword = () => {
     );
   }
 
+  const Header = () => (
+    <View className="flex-row items-center p-4">
+      <TouchableOpacity onPress={()=>{navigation.navigate('Perfil')}}>
+        <Text className="text-white font-light">Voltar</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">
+      <Header />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1 justify-center px-8"
@@ -138,83 +147,12 @@ const ChangePassword = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+
+
+  
+
 };
-//   return (
-//     <>
-//       <SafeAreaView className="flex-1 bg-zinc-900">
 
-
-
-
-
-
-
-//         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-//           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} className="flex-1 items-center justify-center bg-zinc-900">
-
-//           {/* <KeyboardAvoidingView
-//           style={{ flex: 1 }}
-//           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-//           keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-//         > */}
-
-
-
-//           <View className=" w-64 items-center">
-//             <View className="bg-white">
-//               <Image className="w-28 h-28" source={logo}></Image>
-//             </View>
-
-//             <Text className="font-bold text-white text-lg">BioFront</Text>
-
-//           </View>
-
-//           <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
-//             <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
-//               <View className="w-2 justify-center items-center">
-
-//               </View>
-//               <TextInput secureTextEntry={true} placeholderTextColor="gray" value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
-//               {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
-//             </View>
-//             <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
-//               <View className="w-2 justify-center items-center">
-
-//               </View>
-//               <TextInput secureTextEntry={true} placeholderTextColor="gray" value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
-//               {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
-//             </View>
-
-
-
-
-
-
-
-
-//           </View>
-
-
-//           <View>
-//             <View className="flex-row rounded-sm mt-6 ">
-//               <LoginButton press={handleChangePassword} title="Enviar"></LoginButton>
-
-//             </View>
-//           </View>
-
-
-
-
-//         </KeyboardAvoidingView>
-
-//       </SafeAreaView>
-
-
-
-
-//     </>
-//   )
-// }
 
 
 export default ChangePassword

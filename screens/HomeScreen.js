@@ -12,13 +12,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ProfileScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">
+      {/* <Header /> */}
       <ScrollView className="pt-10">
+        
         <ProfileInfo />
         <PlaylistSection />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+
 
 const ProfileInfo = () => {
   

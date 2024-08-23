@@ -50,7 +50,9 @@ function MainTabs() {
             headerTitleStyle: { color: 'white' },
             tabBarShowLabel: true,
             headerShown: false,
-            tabBarActiveTintColor: '#1DB954'
+            tabBarActiveTintColor: '#1DB954',
+            animation: "shift"
+
           }}
         >
           <Tab.Screen
@@ -97,6 +99,8 @@ function MainTabs() {
           <Tab.Screen
             name="Editar perfil"
             component={EditProfile}
+            presentation="modal"
+            animation="slide_from_bottom"
             options={{
               tabBarVisible: false,
               tabBarButton: () => null
