@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingComponent from '../components/LoadingComponent';
 
 const ChangePassword = () => {
 
@@ -80,88 +81,140 @@ const ChangePassword = () => {
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="green" />
-      </View>
+      <LoadingComponent />
     );
   }
 
   return (
-    <>
-      <SafeAreaView className="flex-1 bg-zinc-900">
+    <SafeAreaView className="flex-1 bg-zinc-900">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1 justify-center px-8"
+      >
+        <View className="items-center mb-8">
+          <Image
+            source={require('../assets/logo.jpg')}
+            className="w-16 h-16"
+          />
+        </View>
 
-
-
-
-
-
-
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} className="flex-1 items-center justify-center bg-zinc-900">
-
-          {/* <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-        > */}
-
-
-
-          <View className=" w-64 items-center">
-            <View className="bg-white">
-              <Image className="w-28 h-28" source={logo}></Image>
+        <View className="mb-6">
+          <Text className="text-white text-2xl font-bold text-center">BIOFRONT</Text>
+          {/* <View className="flex-row justify-center space-x-4 mt-2">
+            <View className="border-b border-bioVerde">
+                <Text className="text-white font-semibold">ENTRAR</Text>
             </View>
+            
+            <TouchableOpacity onPress={cadastrar}>
+              <Text className="text-gray-400">CADASTRAR</Text>
+            </TouchableOpacity>
+            
+          </View> */}
+        </View>
 
-            <Text className="font-bold text-white text-lg">BioFront</Text>
+        
 
-          </View>
+        <TextInput
+          value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={30} secureTextEntry={true}
+          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          placeholderTextColor="#9CA3AF"
+        />
+        <TextInput
+          secureTextEntry={true} value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={30}
+          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          placeholderTextColor="#9CA3AF"
+        />
 
-          <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
-            <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
-              <View className="w-2 justify-center items-center">
+        
 
-              </View>
-              <TextInput secureTextEntry={true} placeholderTextColor="gray" value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
-              {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
-            </View>
-            <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
-              <View className="w-2 justify-center items-center">
+        <TouchableOpacity
+          className="bg-bioVerde rounded-full py-4 items-center"
+          onPress={handleChangePassword}
+        >
+          <Text className="text-white font-bold">ALTERAR SENHA</Text>
+        </TouchableOpacity>
 
-              </View>
-              <TextInput secureTextEntry={true} placeholderTextColor="gray" value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
-              {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
-            </View>
-
-
-
-
-
-
-
-
-          </View>
-
-
-          <View>
-            <View className="flex-row rounded-sm mt-6 ">
-              <LoginButton press={handleChangePassword} title="Enviar"></LoginButton>
-
-            </View>
-          </View>
-
-
-
-
-        </KeyboardAvoidingView>
-
-      </SafeAreaView>
+        
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
+//   return (
+//     <>
+//       <SafeAreaView className="flex-1 bg-zinc-900">
 
 
 
 
-    </>
-  )
-}
+
+
+
+//         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+//           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} className="flex-1 items-center justify-center bg-zinc-900">
+
+//           {/* <KeyboardAvoidingView
+//           style={{ flex: 1 }}
+//           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+//           keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+//         > */}
+
+
+
+//           <View className=" w-64 items-center">
+//             <View className="bg-white">
+//               <Image className="w-28 h-28" source={logo}></Image>
+//             </View>
+
+//             <Text className="font-bold text-white text-lg">BioFront</Text>
+
+//           </View>
+
+//           <View className="w-80 items-center mt-16 pt-4 pb-1 space-y-6">
+//             <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
+//               <View className="w-2 justify-center items-center">
+
+//               </View>
+//               <TextInput secureTextEntry={true} placeholderTextColor="gray" value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
+//               {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
+//             </View>
+//             <View className="flex-row rounded-3xl h-12 bg-bioBrancoPrincipal">
+//               <View className="w-2 justify-center items-center">
+
+//               </View>
+//               <TextInput secureTextEntry={true} placeholderTextColor="gray" value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={60} className="w-72 h-12 p-1 pl-3 text-zinc-800"></TextInput>
+//               {/* <TextInput secureTextEntry={true} placeholderTextColor="white" value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={60} className="w-64 h-10 p-1 text-white"></TextInput> */}
+//             </View>
+
+
+
+
+
+
+
+
+//           </View>
+
+
+//           <View>
+//             <View className="flex-row rounded-sm mt-6 ">
+//               <LoginButton press={handleChangePassword} title="Enviar"></LoginButton>
+
+//             </View>
+//           </View>
+
+
+
+
+//         </KeyboardAvoidingView>
+
+//       </SafeAreaView>
+
+
+
+
+//     </>
+//   )
+// }
 
 
 export default ChangePassword
