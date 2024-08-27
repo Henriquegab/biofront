@@ -7,6 +7,7 @@ import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
+import LoadingComponent from '../components/LoadingComponent';
 
 const ForgotPassword = () => {
 
@@ -60,9 +61,7 @@ const ForgotPassword = () => {
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center bg-zinc-900">
-        <ActivityIndicator size="large" color="green" />
-      </View>
+      <LoadingComponent />
     );
   }
 

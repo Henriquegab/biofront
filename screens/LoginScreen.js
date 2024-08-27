@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
+import LoadingComponent from '../components/LoadingComponent';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -38,6 +39,7 @@ const LoginScreen = ({ navigation }) => {
 
         try {
           AsyncStorage.setItem('token', res_api.data.data.token);
+          AsyncStorage.setItem('username', res_api.data.data.user.name);
           setLoading(false);
           navigation.replace('Main');
         } catch (e) {
@@ -77,9 +79,7 @@ const LoginScreen = ({ navigation }) => {
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center bg-zinc-900">
-        <ActivityIndicator size="large" color="green" />
-      </View>
+      <LoadingComponent />
     );
   }
 
@@ -111,7 +111,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <TextInput
-          onChangeText={setEmail} value={email} placeholder="Email" maxLength={40}
+          onChangeText={setEmail} selectionColor={'green'} value={email} placeholder="Email" maxLength={40}
           // value={username}
           // onChangeText={setUsername}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
@@ -119,7 +119,7 @@ const LoginScreen = ({ navigation }) => {
         />
 
         <TextInput
-          onChangeText={setPassword} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40}
+          onChangeText={setPassword} selectionColor={'green'} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
         />

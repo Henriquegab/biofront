@@ -7,6 +7,7 @@ import LoginButton from '../components/LoginButton';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
+import LoadingComponent from '../components/LoadingComponent';
 
 const RegisterScreen = () => {
 
@@ -81,9 +82,7 @@ const RegisterScreen = () => {
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center bg-zinc-900">
-        <ActivityIndicator size="large" color="green" />
-      </View>
+      <LoadingComponent />
     );
   }
 
@@ -120,12 +119,14 @@ const RegisterScreen = () => {
           // onChangeText={setUsername}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
+          selectionColor={'green'}
         />
 
         <TextInput
           value={email} onChangeText={email => setEmail(email)} placeholder="Email" maxLength={40}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
+          selectionColor={'green'}
         />
         <TextInput
           secureTextEntry={true} onChangeText={password => setPassword(password)} value={password} placeholder="Senha" maxLength={40} textContentType={'oneTimeCode'}
@@ -133,12 +134,14 @@ const RegisterScreen = () => {
           // onChangeText={setUsername}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
+          selectionColor={'green'}
         />
 
         <TextInput
           secureTextEntry={true} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} value={confirmPassword} placeholder="Confirmar Senha" maxLength={40} textContentType={'oneTimeCode'}
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
+          selectionColor={'green'}
         />
 
         

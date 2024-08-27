@@ -1,132 +1,161 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, Button, Pressable, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native'
-import React, { useState } from 'react'
-import { LinearGradient } from 'expo-linear-gradient';
-import logo from '../assets/logos.png'
-import email from '../assets/email3.png'
-import LoginButton from '../components/LoginButton';
-import { useNavigation } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Entypo from '@expo/vector-icons/Entypo';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import DismissKeyboard from '../components/DismissKeyboard';
+import LoadingComponent from '../components/LoadingComponent';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+import { loadImage } from '../utils/imageUtils';
+import saveProfileImage from '../utils/imageSaver';
+import ImageSelector from '../components/ImageSelector';
 
-const ChangePassword = () => {
-
+const EditProfile = () => {
+  const [loading, setLoading] = useState(false);
+  const [imageUri, setImageUri] = useState(null);
+  const [imageNotSave, setImageNotSave] = useState(null);
+  const [username, setUsername] = useState('user');
   const navigation = useNavigation();
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null)
+  
+  const fileName = 'user_profile.jpg';
+  const assetPath = `${FileSystem.documentDirectory}${fileName}`;
 
-  const handleChangePassword = async () => {
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUsername = async () => {
+        const value = await AsyncStorage.getItem('username');
+        if (value) setUsername(value);
+      };
+      fetchUsername();
+      loadImage(fileName, setImageUri, setImageNotSave);
+    }, [])
+  );
 
-    
 
-    if (password.length < 6 || password.length > 30) {
-      Toast.show("A senha deve conter entre 6 e 30 digitos", {
-        position: 70
-      });
-      return;
-    }
-    if (password != confirmPassword) {
-      
-      Toast.show("As senhas devem ser iguais!",{
-        position: 70
-      });
-      return;
-    }
-    setLoading(true);
-    const token = await AsyncStorage.getItem('token');
+  const handleCancel = async () => {
+    const name = await AsyncStorage.getItem('username');
+    setUsername(name);
+    navigation.navigate("Perfil");
+  };
 
-    // const navigation = useNavigation();
-   
 
-    try {
+  const saveImage = async () => {
+    if (!imageNotSave) {
 
-      const credentials = {
-        password: password,
+      try {
+       
+        await AsyncStorage.removeItem('username');
+
+        // const res = await axios.patch(global.apiUrl + '/api/login', credentials).then(function (res_api) {
+        
+        //   setResponse(res_api.data);
+  
+        //   try {
+        //     AsyncStorage.setItem('token', res_api.data.data.token);
+        //     AsyncStorage.setItem('username', res_api.data.data.user.name);
+        //     setLoading(false);
+        //     navigation.replace('Main');
+        //   } catch (e) {
+        //     setLoading(false);
+        //     console.error('Erro ao salvar o token:', e);
+        //   }
+  
+  
+        // }).catch(function (error) {
+          
+        //   Toast.show(error.response.data.message, {
+        //     position: 70
+        //   })
+          
+        // });
+
+
+
+
+
+        await AsyncStorage.setItem('username', username);
+        
+      } catch (error) {
+        console.error('Erro ao atualizar o perfil do usuário:', error);
       }
 
-      
 
-      const res = await axios.patch(global.apiUrl + '/api/user/update_password', credentials, {headers: {'Authorization': `Bearer ${token}`}}).then(function (res_api) {
-
-        setResponse(res_api.data);
-        Toast.show(res_api.data.message, {
-          position: 70
-        });
-        
-        navigation.navigate('Perfil');
-
-
-      }).catch(function (error) {
-
-        Toast.show(error.response.data.message, {
-          position: 70
-        })
-
-      });
-
-    } catch (error) {
-      setLoading(false);
-      console.error('Erro ao fazer a requisição PATCH:', error);
+      navigation.navigate("Perfil");
+      return;
     }
-
-    setLoading(false);
-  }
-
-  
+    try {
+      try {
+       
+        await AsyncStorage.removeItem('username');
+        await AsyncStorage.setItem('username', username);
+        
+      } catch (error) {
+        console.error('Erro ao atualizar o perfil do usuário:', error);
+      }
+      
+      await saveProfileImage(imageNotSave, fileName, setImageUri, navigation);
+    } catch (error) {
+      Toast.show('Erro ao salvar a imagem: ' + error, {
+        position: 70,
+      });
+      console.error('Erro ao salvar a imagem:', error);
+    }
+  };
 
   if (loading) {
-    // Exibe um indicador de carregamento enquanto espera a resposta da API
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="green" />
-      </View>
-    );
+    return <LoadingComponent />;
   }
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">
-
-    <View className="bg-zinc-800 w-full h-14 border-b border-zinc-700 rounded-t-xl flex-row justify-between items-center px-4">
-      <TouchableOpacity onPress={()=> {navigation.navigate("Perfil")}}>
-        <Text className="text-white text-sm">Cancelar</Text>
-      </TouchableOpacity>
-      <View>
-        <Text className="text-white text-base font-bold">Editar perfil</Text>
+      <View className="bg-zinc-800 w-full h-14 border-b border-zinc-700 rounded-t-xl flex-row justify-between items-center px-4">
+        <TouchableOpacity onPress={handleCancel}>
+          <Text className="text-white text-sm">Cancelar</Text>
+        </TouchableOpacity>
+        <Text className="text-white text-base font-semibold">Editar perfil</Text>
+        <TouchableOpacity onPress={saveImage}>
+          <Text className="text-white text-sm">Salvar</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-        <Text className="text-white text-sm">Salvar</Text>
-      </TouchableOpacity>
 
-    </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1 justify-start px-7 py-8"
-      >
-        <View className="h-44 items-center justify-center">
-            <TouchableOpacity className=" h-36 w-36 justify-end items-center">
-              <Image
-                source={{ uri: 'https://instagram.fmoc2-1.fna.fbcdn.net/v/t51.2885-19/362384237_791464489192342_4511360389073602271_n.jpg?_nc_ht=instagram.fmoc2-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=mq8yXUk2R_YQ7kNvgHyKfu6&edm=AEhyXUkBAAAA&ccb=7-5&oh=00_AYDUYh3P9PDoMfZaYrdq7P2Kf88rJ1qsonznodmIr6Bapw&oe=66C91DE0&_nc_sid=8f1549' }}
-                className="w-36 h-36 rounded-full mb-2"
+      <DismissKeyboard>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          className="flex-1 justify-start px-7 py-8"
+        >
+          <View className="h-44 items-center justify-center">
+            <ImageSelector imageUri={imageUri} imageNotSave={imageNotSave} setImageUri={setImageNotSave} />
+          </View>
+
+          <View className="h-14 flex-row border-b border-zinc-800">
+            <View className="w-3/12 items-start justify-center">
+              <Text className="text-white text-base font-semibold">Nome</Text>
+            </View>
+            <View className="w-9/12 justify-center items-start pl-8 pr-5">
+              <TextInput
+                selectionColor={'bioVerde'}
+                maxLength={33}
+                className="text-white w-full"
+                value={username}
+                onChangeText={setUsername}
               />
-              <View className=" w-10 h-10 rounded-xl absolute self-end bg-bioBrancoPrincipal items-center justify-center">
-                <Entypo name="pencil" size={24} color="black" />
-              </View>
-            </TouchableOpacity>
-
-        </View>
-      
-
-        
-      </KeyboardAvoidingView>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </DismissKeyboard>
     </SafeAreaView>
   );
 };
 
-
-export default ChangePassword
-
-
+export default EditProfile;

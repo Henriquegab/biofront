@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadImageOnly } from '../utils/imageUtils';
+import LoadingComponent from '../components/LoadingComponent';
+
 
 
 
 const ProfileScreen = () => {
+
+  
+
+  
+
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">
       {/* <Header /> */}
@@ -27,14 +35,37 @@ const ProfileScreen = () => {
 const ProfileInfo = () => {
   
   const navigation = useNavigation();
+  const fileName = 'user_profile.jpg';
+  const [profilePicture, setProfilePicture] = useState(null);
+  // const [imageNotSave, setImageNotSave] = useState(null);
+  const [username, setUsername] = useState('user');
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUsername = async () => {
+        const value = await AsyncStorage.getItem('username');
+        setProfilePicture(null)
+        
+        if (value) setUsername(value);
+      };
+      fetchUsername();
+
+      
+      loadImageOnly(fileName, setProfilePicture);
+      
+    }, [])
+  );
+
+
+
 
   return(
   <View className="items-center mb-6">
     <Image
-      source={{ uri: 'https://instagram.fmoc2-1.fna.fbcdn.net/v/t51.2885-19/362384237_791464489192342_4511360389073602271_n.jpg?_nc_ht=instagram.fmoc2-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=mq8yXUk2R_YQ7kNvgHyKfu6&edm=AEhyXUkBAAAA&ccb=7-5&oh=00_AYDUYh3P9PDoMfZaYrdq7P2Kf88rJ1qsonznodmIr6Bapw&oe=66C91DE0&_nc_sid=8f1549' }}
+      source={{ uri: profilePicture }}
       className="w-24 h-24 rounded-full mb-2"
     />
-    <Text className="text-white text-xl font-semibold">Henrique</Text>
+    <Text className="text-white text-xl font-semibold">{username}</Text>
     <Text className="text-gray-400 text-sm">0 cadastros • 34 publicados</Text>
     <TouchableOpacity onPress={() => {navigation.navigate('Editar perfil')}} className="mt-2 px-4 py-2 bg-zinc-800 rounded-full">
       <Text className="text-white">Editar</Text>
@@ -92,9 +123,7 @@ const [loading, setLoading] = useState(false)
   if (loading) {
     // Exibe um indicador de carregamento enquanto espera a resposta da API
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="green" />
-      </View>
+      <LoadingComponent />
     );
   }
 
