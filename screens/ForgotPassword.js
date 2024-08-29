@@ -51,7 +51,7 @@ const ForgotPassword = () => {
 
     } catch (error) {
       setLoading(false);
-      console.error('Erro ao fazer a requisição POST:', error);
+      console.error('Erro ao fazer a requisição POST:', error)
     }
 
     setLoading(false);

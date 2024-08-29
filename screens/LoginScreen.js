@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import LoadingComponent from '../components/LoadingComponent';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -17,6 +18,14 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null)
+
+  // State variable to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Function to toggle the password visibility state
+  const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+  };
 
    async function handleLogin() {
 
@@ -117,12 +126,22 @@ const LoginScreen = ({ navigation }) => {
           className="bg-zinc-800 text-white rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
         />
+        <View className="bg-zinc-800 text-white rounded-md p-4 mb-4 flex-row justify-between">
+          <TextInput
+            onChangeText={setPassword} selectionColor={'green'} value={password} secureTextEntry={!showPassword} placeholder="Senha" maxLength={40} keyboardType="ascii-capable"
+            className="text-white pr-2 flex-1"
+            placeholderTextColor="#9CA3AF"
+          />
+          <MaterialCommunityIcons
+                    name={showPassword ? 'eye' : 'eye-off'}
+                    size={24}
+                    color="#aaa"
+                    className="ml-10 border border-white"
+                    onPress={toggleShowPassword}
+                />
 
-        <TextInput
-          onChangeText={setPassword} selectionColor={'green'} value={password} secureTextEntry={true} placeholder="Senha" maxLength={40}
-          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
-          placeholderTextColor="#9CA3AF"
-        />
+        </View>
+        
 
         
 

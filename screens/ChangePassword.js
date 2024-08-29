@@ -9,6 +9,7 @@ import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingComponent from '../components/LoadingComponent';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ChangePassword = () => {
 
@@ -18,6 +19,19 @@ const ChangePassword = () => {
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null)
+  // State variable to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Function to toggle the password visibility state
+  const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+  };
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  // Function to toggle the password2 visibility state
+  const toggleShowPassword2 = () => {
+      setShowPassword2(!showPassword2);
+  };
 
   const handleChangePassword = async () => {
 
@@ -122,17 +136,41 @@ const ChangePassword = () => {
         </View>
 
         
+        <View className="bg-zinc-800 rounded-md p-4 mb-4 flex-row justify-between">
+          <TextInput
+            value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={30} secureTextEntry={!showPassword} 
+            className="text-white flex-1 pr-2"
+            placeholderTextColor="#9CA3AF"
+            keyboardType='ascii-capable'
+            selectionColor={'green'}
+          />
+          <MaterialCommunityIcons
+                    name={showPassword ? 'eye' : 'eye-off'}
+                    size={24}
+                    color="#aaa"
+                    className="ml-10 border border-white"
+                    onPress={toggleShowPassword}
+                />
+        </View>
 
-        <TextInput
-          value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={30} secureTextEntry={true}
-          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
-          placeholderTextColor="#9CA3AF"
-        />
-        <TextInput
-          secureTextEntry={true} value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={30}
-          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
-          placeholderTextColor="#9CA3AF"
-        />
+        <View className="bg-zinc-800 rounded-md p-4 mb-4 flex-row justify-between">
+          <TextInput
+            secureTextEntry={!showPassword2}  value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={30}
+            className=" text-white flex-1 pr-2"
+            placeholderTextColor="#9CA3AF"
+            keyboardType='ascii-capable'
+            selectionColor={'green'}
+          />
+          <MaterialCommunityIcons
+                    name={showPassword2 ? 'eye' : 'eye-off'}
+                    size={24}
+                    color="#aaa"
+                    className="ml-10"
+                    onPress={toggleShowPassword2}
+                />
+        </View>
+        
+        
 
         
 

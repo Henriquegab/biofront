@@ -20,6 +20,7 @@ import * as FileSystem from 'expo-file-system';
 import { loadImage } from '../utils/imageUtils';
 import saveProfileImage from '../utils/imageSaver';
 import ImageSelector from '../components/ImageSelector';
+import axios from 'axios';
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -53,38 +54,35 @@ const EditProfile = () => {
   const saveImage = async () => {
     if (!imageNotSave) {
 
+      
+
       try {
        
         await AsyncStorage.removeItem('username');
-
-        // const res = await axios.patch(global.apiUrl + '/api/login', credentials).then(function (res_api) {
-        
-        //   setResponse(res_api.data);
-  
-        //   try {
-        //     AsyncStorage.setItem('token', res_api.data.data.token);
-        //     AsyncStorage.setItem('username', res_api.data.data.user.name);
-        //     setLoading(false);
-        //     navigation.replace('Main');
-        //   } catch (e) {
-        //     setLoading(false);
-        //     console.error('Erro ao salvar o token:', e);
-        //   }
-  
-  
-        // }).catch(function (error) {
-          
-        //   Toast.show(error.response.data.message, {
-        //     position: 70
-        //   })
-          
-        // });
-
-
-
-
-
         await AsyncStorage.setItem('username', username);
+
+        const credentials = {
+          name: username,
+        }
+
+
+          const enviar = await axios.post(global.apiUrl + '/api/user/update', credentials, {headers: {'Authorization': `Bearer ${token}` }}).then(function (res_api){
+            Toast.show(res_api.data.message, {
+              position: 70
+            })
+            console.log(res_api.data.message)
+          }
+            
+          ).catch(function error(e){
+            Toast.show(e, {
+              position: 70
+            })
+            console.log(e)
+          })
+          
+          .finally(function (){
+            setLoading(false)
+          })
         
       } catch (error) {
         console.error('Erro ao atualizar o perfil do usuário:', error);
@@ -94,6 +92,7 @@ const EditProfile = () => {
       navigation.navigate("Perfil");
       return;
     }
+    console.log(1)
     try {
       try {
        
@@ -103,8 +102,35 @@ const EditProfile = () => {
       } catch (error) {
         console.error('Erro ao atualizar o perfil do usuário:', error);
       }
+
+      const token = await AsyncStorage.getItem('token');
+
+      setLoading(true);
       
-      await saveProfileImage(imageNotSave, fileName, setImageUri, navigation);
+      await saveProfileImage(imageNotSave, fileName, setImageUri, navigation).then(function (){
+
+        const formData = new FormData();
+  
+        formData.append('profile_picture', {
+          uri: imageUri,
+          name: 'user_profile.jpg', // Nome do arquivo
+          type: 'image/jpeg' // Tipo MIME
+        });
+      
+        formData.append('name', username);
+
+
+          const enviar = axios.post(global.apiUrl + '/api/user/update', formData, {headers: { "Content-Type": "multipart/form-data", 'Authorization': `Bearer ${token}` }}).then(function (res_api){
+            Toast.show(res_api.data.message, {
+              position: 70
+            })
+            
+          }
+            
+          ).finally(function (){
+            setLoading(false)
+          })
+      });
     } catch (error) {
       Toast.show('Erro ao salvar a imagem: ' + error, {
         position: 70,
