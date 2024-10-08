@@ -14,8 +14,6 @@ const ForgotPassword = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null)
   
   const handleForgotPassword = async () => {
     if(email.length < 2){
@@ -34,7 +32,7 @@ const ForgotPassword = () => {
 
       const res = await axios.post(global.apiUrl + '/api/user/forgot_password', credentials).then(function (res_api) {
         
-        setResponse(res_api.data);
+        
         Toast.show(res_api.data.message,{
           position: 70
         });
@@ -66,7 +64,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-zinc-900">
+    <SafeAreaView className="flex-1 bg-bioBrancoPrincipal">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1 justify-center px-8"
@@ -79,7 +77,7 @@ const ForgotPassword = () => {
         </View>
 
         <View className="mb-6">
-          <Text className="text-white text-2xl font-bold text-center">BIOFRONT</Text>
+          <Text className="text-bioTextoCinzaEscuro text-2xl font-bold text-center">BIOFRONT</Text>
           <View className="flex-row justify-center space-x-4 mt-2">
             <TouchableOpacity onPress={()=>{navigation.navigate('Login')}} className="">
                 <Text className="text-gray-400">ENTRAR</Text>
@@ -96,14 +94,14 @@ const ForgotPassword = () => {
           onChangeText={setEmail} value={email} placeholder="Email" maxLength={40}
           // value={username}
           // onChangeText={setUsername}
-          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          className="bg-white text-bioTextoCinzaEscuro rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
         />
 
         
 
         <TouchableOpacity
-          className="bg-bioVerde rounded-full py-4 items-center"
+          className="bg-bioVerde rounded-xl py-4 items-center"
           onPress={handleForgotPassword}
         >
           <Text className="text-white font-bold">ENVIAR</Text>

@@ -10,14 +10,13 @@ import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import LoadingComponent from '../components/LoadingComponent';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as FileSystem from 'expo-file-system';
 
 const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null)
 
   // State variable to track password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +25,14 @@ const LoginScreen = ({ navigation }) => {
   const toggleShowPassword = () => {
       setShowPassword(!showPassword);
   };
+
+  const getProfilePicture = async (picture)  => {
+    console.log('ali')
+    
+
+    setLoading(false);
+    navigation.replace('Main');
+  }
 
    async function handleLogin() {
 
@@ -44,13 +51,24 @@ const LoginScreen = ({ navigation }) => {
 
       const res = await axios.post(global.apiUrl + '/api/login', credentials).then(function (res_api) {
         
-        setResponse(res_api.data);
+        // setResponse(res_api.data.data.profile_picture);
+        console.log('oi')
+        // alert(res_api.data.data.profile_picture)
 
         try {
           AsyncStorage.setItem('token', res_api.data.data.token);
           AsyncStorage.setItem('username', res_api.data.data.user.name);
-          setLoading(false);
-          navigation.replace('Main');
+
+          if(res_api.data.data.profile_picture === null){
+            setLoading(false);
+            navigation.replace('Main');
+          }
+          else{
+            console.log('aqui')
+            getProfilePicture(res_api.data.data.profile_picture)
+          }
+          
+          
         } catch (e) {
           setLoading(false);
           console.error('Erro ao salvar o token:', e);
@@ -65,10 +83,14 @@ const LoginScreen = ({ navigation }) => {
         
       });
 
+      
+
     } catch (error) {
       setLoading(false);
       console.error('Erro ao fazer a requisição POST:', error);
     }
+
+    
 
     setLoading(false);
   
@@ -93,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-zinc-900">
+    <SafeAreaView className="flex-1 bg-bioBrancoPrincipal">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1 justify-center px-8"
@@ -103,17 +125,18 @@ const LoginScreen = ({ navigation }) => {
             source={require('../assets/logo.jpg')}
             className="w-16 h-16"
           />
+          <Text className="text-bioTextoCinzaEscuro text-4xl font-bold text-center pt-4">BIOFRONT</Text>
         </View>
 
         <View className="mb-6">
-          <Text className="text-white text-2xl font-bold text-center">BIOFRONT</Text>
+          
           <View className="flex-row justify-center space-x-4 mt-2">
             <View className="border-b border-bioVerde">
-                <Text className="text-white font-semibold">ENTRAR</Text>
+                <Text className="text-bioTextoCinzaEscuro font-extrabold">ENTRAR</Text>
             </View>
             
             <TouchableOpacity onPress={cadastrar}>
-              <Text className="text-gray-400">CADASTRAR</Text>
+              <Text className="text-bioTextoCinzaEscuro font-light text-opacity-30">CADASTRAR</Text>
             </TouchableOpacity>
             
           </View>
@@ -123,13 +146,13 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={setEmail} selectionColor={'green'} value={email} placeholder="Email" maxLength={40}
           // value={username}
           // onChangeText={setUsername}
-          className="bg-zinc-800 text-white rounded-md p-4 mb-4"
+          className="bg-white text-bioTextoCinzaEscuro rounded-md p-4 mb-4"
           placeholderTextColor="#9CA3AF"
         />
-        <View className="bg-zinc-800 text-white rounded-md p-4 mb-4 flex-row justify-between">
+        <View className="bg-white text-bioTextoCinzaEscuro rounded-md p-4 mb-4 flex-row justify-between">
           <TextInput
             onChangeText={setPassword} selectionColor={'green'} value={password} secureTextEntry={!showPassword} placeholder="Senha" maxLength={40} keyboardType="ascii-capable"
-            className="text-white pr-2 flex-1"
+            className="text-bioTextoCinzaEscuro pr-2 flex-1"
             placeholderTextColor="#9CA3AF"
           />
           <MaterialCommunityIcons
@@ -146,14 +169,14 @@ const LoginScreen = ({ navigation }) => {
         
 
         <TouchableOpacity
-          className="bg-bioVerde rounded-full py-4 items-center"
+          className="bg-bioVerde rounded-xl py-4 items-center"
           onPress={handleLogin}
         >
           <Text className="text-white font-bold">ENTRAR</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={esqueceuSenha} className="mt-4">
-          <Text className="text-gray-400 text-center">Esqueceu a senha?</Text>
+          <Text className="text-black text-center">Esqueceu a senha?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </SafeAreaView>

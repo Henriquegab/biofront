@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Button, Platform, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useState, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from './screens/HomeScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -11,7 +12,8 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import MainMenu from './screens/MainMenu';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import IconOutline from 'react-native-vector-icons/FontAwesome6';
 import PostAnimal from './screens/PostAnimal';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import "./conection";
@@ -39,18 +41,32 @@ function AuthStack() {
   );
 }
 
+const BackButton = ({onPress})=> <TouchableOpacity style={{alignItems:"center",flexDirection:"row",justifyContent:"center"}}>
+<Ionicons name="chevron-back" size={24} color="black" />
+ <Text onPress={onPress}> Back </Text>
+ </TouchableOpacity>
+
+ 
+
 function MainTabs() {
+
+  
   return (
     
       <RootSiblingParent>
         <Tab.Navigator
           screenOptions={{
-            tabBarStyle: { backgroundColor: '#18181b', borderTopWidth: 0  },
-            headerStyle: { backgroundColor: '#18181b' },
+            tabBarStyle: { backgroundColor: '#f4f7f2', borderTopWidth: 0  },
+            headerStyle: { backgroundColor: '#607f60' },
             headerTitleStyle: { color: 'white' },
             tabBarShowLabel: true,
-            headerShown: false,
-            tabBarActiveTintColor: '#1DB954',
+            headerTintColor: "#ffffff",
+            headerShown: true,
+            tabBarActiveTintColor: '#607f60',
+            tabBarLabelStyle: {
+              fontWeight: '400'
+            },
+           
             animation: "shift"
 
           }}
@@ -59,9 +75,16 @@ function MainTabs() {
             name="Menu"
             component={MainMenu}
             options={{
+              tabBarLabelStyle: ({ focused }) => {
+                fontWeight: focused ? "900" : "400"
+            },
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="home" color={focused ? "#1DB954" : "white"} size={24} />
+                  <Ionicons
+                    name={focused ? "home" : "home-outline"} // "home-outline" para contorno e "home" para preenchido
+                    color={focused ? "#607f60" : "#333333"}
+                    size={20}
+                  />
                 </View>
               ),
             }}
@@ -72,9 +95,14 @@ function MainTabs() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="pencil" color={focused ? "#1DB954" : "white"} size={24} />
+                  <Ionicons
+                    name={focused ? "clipboard" : "clipboard-outline"} // "home-outline" para contorno e "home" para preenchido
+                    color={focused ? "#607f60" : "#333333"}
+                    size={20}
+                  />
                 </View>
               ),
+              headerShown: false
             }}
           />
           <Tab.Screen
@@ -83,7 +111,11 @@ function MainTabs() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <View style={focused ? styles.focusedIcon : styles.icon}>
-                  <Icon name="user" color={focused ? "#1DB954" : "white"} size={24} />
+                  <Ionicons
+                    name={focused ? "people" : "people-outline"} // "home-outline" para contorno e "home" para preenchido
+                    color={focused ? "#607f60" : "#333333"}
+                    size={20}
+                  />
                 </View>
               ),
             }}

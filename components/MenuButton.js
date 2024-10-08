@@ -4,7 +4,7 @@ import React from 'react'
 const MenuButton = (props) => {
   return (
     
-        <TouchableOpacity onPress={props.press} className="flex-1 border flex-row rounded-xl bg-zinc-700 my-1 w-max h-36 justify-center content-center drop-shadow-lg">
+        <TouchableOpacity onPress={props.press} className="flex-1 flex-row rounded-xl bg-white my-2 mx-3 w-max h-36 justify-center content-center shadow-md">
           <View className="w-2/5 h-full">
             <Image
               source={props.image}

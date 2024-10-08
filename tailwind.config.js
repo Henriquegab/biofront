@@ -7,13 +7,23 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      height: {
+        
+        'tab': '84px',
+        'tab2': '86px',
+        'tab3': '88px',
+        'tab4': '90px',
+        'tab5': '92px',
+        
+      },
       colors: {
         'bioPrincipal': '#42c248',
-        'bioBrancoPrincipal' : '#f5f5f5',
+        'bioBrancoPrincipal' : '#f4f7f2',
         'bioTextoCinza' : '#dcdcdc',
-        'bioTextoCinzaEscuro' : '#b6b6b6',
+        'bioTextoCinzaEscuro' : '#333333',
         'bioTextoCinzaMaisEscuro' : '#1c1c1c',
-        'bioVerde' : '#1DB954',
+        'bioTextoCinzaDefault' : '#9f9f9f',
+        'bioVerde' : '#607f60',
         'bioCinza': '#9c9c9c'
         
       },

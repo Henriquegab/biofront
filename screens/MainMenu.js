@@ -1,12 +1,13 @@
 import { View, Text, SafeAreaView, SafeAreaViewBase, ScrollView, TouchableOpacity } from 'react-native'
 import MenuButton from '../components/MenuButton'
 import React from 'react'
+import ComponentTest from '../components/ComponentTest'
 
 const MainMenu = () => {
   return (
     <>
     
-        <SafeAreaView className="flex-1 bg-zinc-900">
+        <SafeAreaView className="flex-1 bg-bioBrancoPrincipal">
             
         
           <ScrollView className="">

@@ -11,7 +11,7 @@ import React, { useCallback, useState } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Entypo from '@expo/vector-icons/Entypo';
+// import Entypo from '@expo/vector-icons/Entypo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DismissKeyboard from '../components/DismissKeyboard';
 import LoadingComponent from '../components/LoadingComponent';
@@ -21,6 +21,7 @@ import { loadImage } from '../utils/imageUtils';
 import saveProfileImage from '../utils/imageSaver';
 import ImageSelector from '../components/ImageSelector';
 import axios from 'axios';
+import FormData from 'form-data'
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -57,16 +58,21 @@ const EditProfile = () => {
       
 
       try {
-       
+        
+        console.log(2)
         await AsyncStorage.removeItem('username');
         await AsyncStorage.setItem('username', username);
+
+        let data = new FormData();
+        data.append('file', imageUri, 'profile_picture');
 
         const credentials = {
           name: username,
         }
 
 
-          const enviar = await axios.post(global.apiUrl + '/api/user/update', credentials, {headers: {'Authorization': `Bearer ${token}` }}).then(function (res_api){
+          const enviar = await axios.post(global.apiUrl + '/api/user/update', data, {headers: {'Content-Type': 'multipart/form-data','Authorization': `Bearer ${token}` }}).then(function (res_api){
+            console.log(3)
             Toast.show(res_api.data.message, {
               position: 70
             })
@@ -82,6 +88,7 @@ const EditProfile = () => {
           
           .finally(function (){
             setLoading(false)
+            console.log(4)
           })
         
       } catch (error) {
@@ -92,7 +99,7 @@ const EditProfile = () => {
       navigation.navigate("Perfil");
       return;
     }
-    console.log(1)
+    
     try {
       try {
        
@@ -105,32 +112,41 @@ const EditProfile = () => {
 
       const token = await AsyncStorage.getItem('token');
 
-      setLoading(true);
-      
-      await saveProfileImage(imageNotSave, fileName, setImageUri, navigation).then(function (){
+      await setLoading(true);
 
-        const formData = new FormData();
-  
-        formData.append('profile_picture', {
-          uri: imageUri,
-          name: 'user_profile.jpg', // Nome do arquivo
-          type: 'image/jpeg' // Tipo MIME
-        });
-      
-        formData.append('name', username);
+       
 
+        const data = new FormData();
 
-          const enviar = axios.post(global.apiUrl + '/api/user/update', formData, {headers: { "Content-Type": "multipart/form-data", 'Authorization': `Bearer ${token}` }}).then(function (res_api){
-            Toast.show(res_api.data.message, {
-              position: 70
-            })
-            
-          }
-            
-          ).finally(function (){
-            setLoading(false)
+        const filename = imageNotSave.substring(imageNotSave.lastIndexOf('/') + 1, imageNotSave.length);
+        const extension = filename.split('.')[1]
+
+        
+
+        
+        await saveProfileImage(imageNotSave, fileName, setImageUri, navigation)
+        
+        data.append('image', JSON.parse(JSON.stringify({name:filename,uri: imageUri,type:'image/'+ extension})));
+
+        const enviar = await axios.post(global.apiUrl+'/api/user/update', data, {headers: { 'Accept': 'application/json',"Content-Type": `multipart/form-data`, 'Authorization': `Bearer ${token}` }}).then(function (res_api){
+          Toast.show(res_api.data.message, {
+            position: 70
           })
-      });
+          console.log(res_api.data.message)
+          
+          
+          console.log(imageUri)
+        
+        
+        }).catch(function (error){
+          console.log(error.request)
+          
+        }).finally(()=> {
+          setLoading(false);
+        })
+      
+      
+      
     } catch (error) {
       Toast.show('Erro ao salvar a imagem: ' + error, {
         position: 70,
