@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, Button, StyleSheet, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import LoadingComponent from '../components/LoadingComponent';
+import Toast from 'react-native-root-toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -13,6 +18,9 @@ const PostAnimal = () => {
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [animal, setAnimal] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigation = useNavigation();
+
 
   const selectPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,10 +54,59 @@ const PostAnimal = () => {
     setPhoto('')
   }
   
-  const teste = () => {
-    alert(photo)
+  const cadastrar = async () => {
+    if (titulo.length === 0) return;
+    
+
+    try{
+      const token = await AsyncStorage.getItem('token');
+      await setLoading(true);
+
+      const data = new FormData();
+
+      const filename = photo.substring(photo.lastIndexOf('/') + 1, photo.length);
+      const extension = filename.split('.')[1]
+
+      data.append('imagem', JSON.parse(JSON.stringify({name:filename,uri: photo,type:'image/'+ extension})));
+
+      data.append('titulo', titulo);
+      data.append('descricao', descricao);
+      data.append('animal', animal);
+      data.append('lat', "1");
+      data.append('lon', "1");
+
+      const enviar = await axios.post(global.apiUrl+'/api/animal', data, {headers: { 'Accept': 'application/json',"Content-Type": `multipart/form-data`, 'Authorization': `Bearer ${token}` }}).then(function (res_api){
+        Toast.show(res_api.data.message, {
+          position: 70
+        })
+        console.log(res_api.data.message)
+      }).catch(function (error){
+        console.log(error.request)
+        
+      }).finally(()=> {
+        setTitulo('')
+        setDescricao('')
+        setAnimal('')
+        setPhoto('')
+        setLoading(false);
+        navigation.navigate("Menu");
+      })
+
+    }
+    catch(error){
+      Toast.show('Erro ao salvar a imagem: ' + error, {
+        position: 70,
+      });
+      console.error('Erro ao salvar a imagem:', error);
+    }
   }
 
+  if (loading) {
+    // Exibe um indicador de carregamento enquanto espera a resposta da API
+    return (
+      <LoadingComponent />
+    );
+  }
 
   return (
     <>
@@ -81,8 +138,12 @@ const PostAnimal = () => {
             <ScrollView className="">
               <View className="items-center pt-3">
                 <TouchableOpacity onPress={selectPhoto} className="w-11/12 h-64 border-2 border-bioVerde rounded-lg border-dashed items-center justify-center mb-2">
+                
 
+                  {photo ? <Image className="w-11/12 h-60 rounded-lg" source={{ uri: photo }} /> :
+                  
                   <View className="h-36 w-44 flex-col">
+                    
                       <View className="h-2/4 items-center justify-end">
                         <Ionicons
                           name='camera-outline' // "home-outline" para contorno e "home" para preenchido
@@ -98,6 +159,9 @@ const PostAnimal = () => {
                       </View>
                      
                   </View>
+
+                  }
+                  
                 
                 </TouchableOpacity>
                 <View className="bg-white w-full">
@@ -136,7 +200,7 @@ const PostAnimal = () => {
                   </View>
                   <View className="w-full h-24 items-center">
                     <TouchableOpacity
-                      onPress={teste} className="bg-bioVerde rounded-xl py-4 items-center h-14 w-11/12 mt-4 justify-center">
+                      onPress={cadastrar} className="bg-bioVerde rounded-xl py-4 items-center h-14 w-11/12 mt-4 justify-center">
                       <Text  className="text-white font-bold">CADASTRAR</Text>
                     </TouchableOpacity>
                   </View>
@@ -145,6 +209,7 @@ const PostAnimal = () => {
               </View>
               
             </ScrollView>
+            
         </KeyboardAwareScrollView>
     </View>
       
@@ -152,5 +217,35 @@ const PostAnimal = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    padding: 10,
+    justifyContent: 'start',
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 16,
+    marginVertical: 4,
+  },
+  input: {
+    width: '100%',
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 8,
+  },
+  photo: {
+    width: 200,
+    height: 150,
+    marginTop: 16,
+  },
+});
 
 export default PostAnimal;
