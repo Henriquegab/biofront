@@ -118,6 +118,7 @@ function MainTabs() {
                   />
                 </View>
               ),
+              headerShadowVisible: false, // applied here
             }}
           />
           <Tab.Screen
@@ -125,7 +126,8 @@ function MainTabs() {
             component={ChangePassword}
             options={{
               tabBarVisible: false,
-              tabBarButton: () => null
+              tabBarButton: () => null,
+              headerShown: false
             }}
           />
           <Tab.Screen
@@ -135,8 +137,10 @@ function MainTabs() {
             animation="slide_from_bottom"
             options={{
               tabBarVisible: false,
-              tabBarButton: () => null
+              tabBarButton: () => null,
+              headerShown: false
             }}
+            
           />
           {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
           {/* Adicione outras telas aqui */}

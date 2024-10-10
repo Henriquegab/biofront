@@ -102,44 +102,35 @@ const ChangePassword = () => {
   const Header = () => (
     <View className="flex-row items-center p-4">
       <TouchableOpacity onPress={()=>{navigation.navigate('Perfil')}}>
-        <Text className="text-white font-light">Voltar</Text>
+        <Text className="text-bioTextoCinzaEscuro font-light">Voltar</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-zinc-900">
+    <SafeAreaView className="flex-1 bg-bioBrancoPrincipal">
       <Header />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1 justify-center px-8"
       >
-        <View className="items-center mb-8">
+        <View className="items-center mb-4">
           <Image
             source={require('../assets/logo.jpg')}
             className="w-16 h-16"
           />
         </View>
 
-        <View className="mb-6">
-          <Text className="text-white text-2xl font-bold text-center">BIOFRONT</Text>
-          {/* <View className="flex-row justify-center space-x-4 mt-2">
-            <View className="border-b border-bioVerde">
-                <Text className="text-white font-semibold">ENTRAR</Text>
-            </View>
-            
-            <TouchableOpacity onPress={cadastrar}>
-              <Text className="text-gray-400">CADASTRAR</Text>
-            </TouchableOpacity>
-            
-          </View> */}
+        <View className="mb-8">
+          <Text className="text-bioTextoCinzaEscuro text-3xl font-bold text-center">BIOFRONT</Text>
+          
         </View>
 
         
-        <View className="bg-zinc-800 rounded-md p-4 mb-4 flex-row justify-between">
+        <View className="bg-white rounded-md p-4 mb-4 flex-row justify-between">
           <TextInput
             value={password} onChangeText={password => setPassword(password)} placeholder="Nova senha" maxLength={30} secureTextEntry={!showPassword} 
-            className="text-white flex-1 pr-2"
+            className="text-bioTextoCinzaEscuro flex-1 pr-2"
             placeholderTextColor="#9CA3AF"
             keyboardType='ascii-capable'
             selectionColor={'green'}
@@ -153,10 +144,10 @@ const ChangePassword = () => {
                 />
         </View>
 
-        <View className="bg-zinc-800 rounded-md p-4 mb-4 flex-row justify-between">
+        <View className="bg-white rounded-md p-4 mb-4 flex-row justify-between">
           <TextInput
             secureTextEntry={!showPassword2}  value={confirmPassword} onChangeText={confirmPassword => setConfirmPassword(confirmPassword)} placeholder="Confirmar senha" maxLength={30}
-            className=" text-white flex-1 pr-2"
+            className=" text-bioTextoCinzaEscuro flex-1 pr-2"
             placeholderTextColor="#9CA3AF"
             keyboardType='ascii-capable'
             selectionColor={'green'}
@@ -175,7 +166,7 @@ const ChangePassword = () => {
         
 
         <TouchableOpacity
-          className="bg-bioVerde rounded-full py-4 items-center"
+          className="bg-bioVerde rounded-xl py-4 items-center"
           onPress={handleChangePassword}
         >
           <Text className="text-white font-bold">ALTERAR SENHA</Text>

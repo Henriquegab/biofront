@@ -15,6 +15,7 @@ const MainMenu = ({ navigation }) => {
   const [listKey, setListKey] = useState(0); // Estado para forçar a remontagem
   const [refreshing, setRefreshing] = useState(false);
   const [animals, setAnimals] = useState([]);
+  
 
   const fetchAnimals = async () => {
     try {

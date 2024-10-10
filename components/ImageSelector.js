@@ -1,6 +1,6 @@
 // ImageSelector.js
 import React from 'react';
-import { TouchableOpacity, Image, View } from 'react-native';
+import { TouchableOpacity, Image, View, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Entypo from '@expo/vector-icons/Entypo';
 
@@ -26,9 +26,9 @@ const ImageSelector = ({ imageNotSave, imageUri, setImageUri }) => {
   
 
   return (
-    <TouchableOpacity onPress={pickImage} className="h-36 w-36 justify-end items-center">
+    <TouchableOpacity style={styles.box} onPress={pickImage} className="h-36 w-36 justify-end items-center">
               {imageNotSave ? (
-                <Image source={{ uri: imageNotSave }} className="w-36 h-36 rounded-full mb-2" />
+                <Image  source={{ uri: imageNotSave }} className="w-36 h-36 rounded-full mb-2" />
               ) : (
                 imageUri && <Image source={{ uri: imageUri }} className="w-36 h-36 rounded-full mb-2" />
               )}
@@ -38,5 +38,16 @@ const ImageSelector = ({ imageNotSave, imageUri, setImageUri }) => {
       </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  box: {
+    // ...
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+});
 
 export default ImageSelector;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator} from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -19,13 +19,13 @@ const ProfileScreen = () => {
   
 
   return (
-    <SafeAreaView className="flex-1 bg-zinc-900">
+    <SafeAreaView className="flex-1 bg-bioBrancoPrincipal">
       {/* <Header /> */}
-      <ScrollView className="pt-10">
+      {/* <View className=""> */}
         
         <ProfileInfo />
         <PlaylistSection />
-      </ScrollView>
+      {/* </View> */}
     </SafeAreaView>
   );
 };
@@ -60,14 +60,18 @@ const ProfileInfo = () => {
 
 
   return(
-  <View className="items-center mb-6">
-    <Image
-      source={{ uri: profilePicture }}
-      className="w-24 h-24 rounded-full mb-2"
-    />
+  <View className="items-center mb-6 bg-bioVerde">
+    <View style={styles.box}>
+      <Image
+        source={{ uri: profilePicture }}
+        className="w-24 h-24 rounded-full mb-2"
+        
+      />
+    </View>
+    
     <Text className="text-white text-xl font-semibold">{username}</Text>
     <Text className="text-gray-400 text-sm">0 cadastros • 34 publicados</Text>
-    <TouchableOpacity onPress={() => {navigation.navigate('Editar perfil')}} className="mt-2 px-4 py-2 bg-zinc-800 rounded-full">
+    <TouchableOpacity onPress={() => {navigation.navigate('Editar perfil')}} className="my-2 px-4 py-2 bg-zinc-800 rounded-full">
       <Text className="text-white">Editar</Text>
     </TouchableOpacity>
   </View>
@@ -131,34 +135,45 @@ const [loading, setLoading] = useState(false)
   
 
   return (
-    <View className="px-4">
-      <Text className="text-white text-xl font-semibold mb-4">Gerenciamento de conta</Text>
+    <View style={styles.box} className="p-4  rounded-xl bg-white mx-4">
+      <Text className="text-bioTextoCinzaEscuro text-xl font-semibold mb-4">Gerenciamento de conta</Text>
       <TouchableOpacity onPress={() => {navigation.navigate('Mudar senha')}} className="flex-row items-center mb-4">
-        <View className="mr-2 ml-1">
-          <Ionicons name="key" size={32} color="white" />
+        <View className="mr-2">
+          <Ionicons name="key" size={28} color="#333333" />
         </View>
         <View>
-          <Text className="text-white font-semibold">Mudar a senha</Text>
+          <Text className="text-bioTextoCinzaEscuro font-semibold">Mudar a senha</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity className="flex-row items-center mb-4">
-        <View className="mr-2 ml-1">
-          <MaterialCommunityIcons name="cloud-upload-outline" size={32} color="white" />
+        <View className="mr-2">
+          <MaterialCommunityIcons name="cloud-upload-outline" size={28} color="#333333" />
         </View>
         <View>
-          <Text className="text-white font-semibold">Sincronizar dados salvos</Text>
+          <Text className="text-bioTextoCinzaEscuro font-semibold">Sincronizar dados salvos</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleLogout} className="flex-row items-center mb-4">
-        <View className="mr-2 ml-1">
-          <MaterialCommunityIcons name="logout" size={32} color="red" />
+        <View className="mr-2">
+          <MaterialCommunityIcons name="logout" size={28} color="#607f60" />
         </View>
         <View>
-          <Text className="text-red-600 font-semibold">Sair</Text>
+          <Text className="text-bioVerde font-semibold">Sair</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  box: {
+    // ...
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+});
 
 export default ProfileScreen;

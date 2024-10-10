@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 const SearchBar = () => {
   return (
-    <View className="w-max mx-3 h-12 rounded-full bg-white mt-4 flex-row">
+    <View className="w-max mx-3 h-12 rounded-full bg-white mt-4 mb-2 flex-row">
       <TouchableOpacity className="h-12 w-2/12 justify-center items-center">
         <Ionicons
             name='search' // "home-outline" para contorno e "home" para preenchido

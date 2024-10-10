@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -53,10 +54,13 @@ const EditProfile = () => {
 
 
   const saveImage = async () => {
+
+    const token = await AsyncStorage.getItem('token');
+
     if (!imageNotSave) {
 
       
-
+      
       try {
         
         console.log(2)
@@ -110,7 +114,7 @@ const EditProfile = () => {
         console.error('Erro ao atualizar o perfil do usuário:', error);
       }
 
-      const token = await AsyncStorage.getItem('token');
+      
 
       await setLoading(true);
 
@@ -160,8 +164,8 @@ const EditProfile = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-zinc-900">
-      <View className="bg-zinc-800 w-full h-14 border-b border-zinc-700 rounded-t-xl flex-row justify-between items-center px-4">
+    <SafeAreaView edges={['right', 'left', 'top']} className="flex-1 bg-bioVerde">
+      <View className="bg-bioVerde w-full h-14 flex-row justify-between items-center px-4">
         <TouchableOpacity onPress={handleCancel}>
           <Text className="text-white text-sm">Cancelar</Text>
         </TouchableOpacity>
@@ -170,32 +174,35 @@ const EditProfile = () => {
           <Text className="text-white text-sm">Salvar</Text>
         </TouchableOpacity>
       </View>
-
-      <DismissKeyboard>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          className="flex-1 justify-start px-7 py-8"
-        >
-          <View className="h-44 items-center justify-center">
-            <ImageSelector imageUri={imageUri} imageNotSave={imageNotSave} setImageUri={setImageNotSave} />
-          </View>
-
-          <View className="h-14 flex-row border-b border-zinc-800">
-            <View className="w-3/12 items-start justify-center">
-              <Text className="text-white text-base font-semibold">Nome</Text>
+      <View className="bg-bioBrancoPrincipal flex-1">
+        <DismissKeyboard>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            className="flex-1 justify-start px-7 py-8"
+          >
+            <View className="h-44 items-center justify-center">
+              <ImageSelector imageUri={imageUri} imageNotSave={imageNotSave} setImageUri={setImageNotSave} />
             </View>
-            <View className="w-9/12 justify-center items-start pl-8 pr-5">
-              <TextInput
-                selectionColor={'bioVerde'}
-                maxLength={33}
-                className="text-white w-full"
-                value={username}
-                onChangeText={setUsername}
-              />
+
+            <View className="h-14 flex-row border-b border-bioVerde">
+              <View className="w-3/12 items-start justify-center">
+                <Text className="text-bioTextoCinzaEscuro text-base font-semibold">Nome</Text>
+              </View>
+              <View className="w-9/12 justify-center items-start pl-8 pr-5">
+                <TextInput
+                  selectionColor={'bioVerde'}
+                  maxLength={33}
+                  className="text-bioTextoCinzaEscuro w-full"
+                  value={username}
+                  onChangeText={setUsername}
+                />
+              </View>
             </View>
-          </View>
-        </KeyboardAvoidingView>
-      </DismissKeyboard>
+          </KeyboardAvoidingView>
+        </DismissKeyboard>
+      </View>
+
+      
     </SafeAreaView>
   );
 };
