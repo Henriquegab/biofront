@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, Button, StyleSheet, Image } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -112,8 +112,8 @@ const PostAnimal = () => {
     <>
     
     <SafeAreaView edges={['right', 'left', 'top']} className="flex-1 bg-bioVerde">
-    <View className="bg-bioVerde h-11 justify-end">
-        <View className="h-12 justify-center flex-row">
+    <View className="bg-bioVerde h-11 justify-center self-center">
+        <View className="h-12 w-11/12 justify-center flex-row">
 
         
           <View className="h-full w-1/4">
@@ -122,7 +122,7 @@ const PostAnimal = () => {
           <View className="h-full w-2/4 justify-center items-center">
               <Text className="text-base pt-1 text-white font-semibold">Cadastro de animal</Text>
           </View>
-          <TouchableOpacity onPress={limpar} className="h-full w-1/4 justify-center items-center">
+          <TouchableOpacity onPress={limpar} className="h-full w-1/4 justify-center items-end">
                 <Text className="text-sm pt-1 text-white font-light">Limpar</Text>
           </TouchableOpacity>
           
@@ -130,7 +130,7 @@ const PostAnimal = () => {
         </View>
     </View>
     <View className="bg-bioBrancoPrincipal flex-1">
-        <KeyboardAwareScrollView
+        <KeyboardAvoidingView
               style={{ flex: 1 }}
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
@@ -210,7 +210,7 @@ const PostAnimal = () => {
               
             </ScrollView>
             
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
     </View>
       
     </SafeAreaView>

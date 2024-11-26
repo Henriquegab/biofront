@@ -22,6 +22,7 @@ import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import ChangePassword from './screens/ChangePassword';
 import EditProfile from './screens/EditProfile';
+import ShowAnimal from './screens/ShowAnimal';
 
 
 const Stack = createNativeStackNavigator();
@@ -126,6 +127,15 @@ function MainTabs() {
             component={ChangePassword}
             options={{
               tabBarVisible: false,
+              tabBarButton: () => null,
+              headerShown: false
+            }}
+          />
+          <Tab.Screen
+            name="ShowAnimal"
+            component={ShowAnimal}
+            options={{
+              tabBarVisible: true,
               tabBarButton: () => null,
               headerShown: false
             }}

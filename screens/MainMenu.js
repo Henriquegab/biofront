@@ -53,17 +53,29 @@ const MainMenu = ({ navigation }) => {
     setRefreshing(false);
   }, []);
 
+  const pressAnimal = (item) =>{
+    // console.log(item)
+    navigation.navigate('ShowAnimal', { animal: item })
+  }
+  const [hasVisited, setHasVisited] = useState(false);
   useFocusEffect(
     useCallback(() => {
-      onRefresh(); // Executa onRefresh sempre que a tela estiver em foco
-    }, [onRefresh])
+      if (!hasVisited) {
+        onRefresh(); // Executa o onRefresh somente na primeira vez
+        setHasVisited(true); // Define que já foi visitado
+      }
+    }, [hasVisited, onRefresh])
   );
 
 
   const renderAnimal = ({ item }) => (
     
-    <MenuButton title={item.titulo} animal={item.animal} autor={item.created_at} image={{ uri: `${global.apiUrl}/storage/${item.imagem[0]?.caminho}` }}></MenuButton>
+    <MenuButton press={() => pressAnimal(item)} title={item.titulo} animal={item.animal} autor={item.created_at} image={{ uri: `${global.apiUrl}/storage/${item.imagem[0]?.caminho}` }}></MenuButton>
   );
+
+  
+
+  
 
 
   return (
@@ -78,7 +90,10 @@ const MainMenu = ({ navigation }) => {
             data={animals}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderAnimal}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}
+            
+
+            />}
           />
            
           {/* <Pagination></Pagination> */}

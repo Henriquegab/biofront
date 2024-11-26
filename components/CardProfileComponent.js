@@ -10,7 +10,7 @@ const CardProfileComponent = () => {
                 
             </View>
             <View className="flex flex-col items-center pb-10">
-                <Image className="w-24 h-24 mb-3 rounded-full" source={require('../assets/logo.jpg')} alt="Bonnie image"/>
+                <Image className="w-24 h-24 mb-3 rounded-full" source={require('../assets/images/urso.png')} alt="Bonnie image"/>
                 <Text className="mb-1 text-xl font-medium text-gray-900 dark:text-white">Sistema dos Urso</Text>
                 <Text className="text-sm text-gray-500 dark:text-gray-400">Em produção</Text>
                 <View className="flex mt-4 md:mt-6">

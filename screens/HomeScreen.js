@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadImageOnly } from '../utils/imageUtils';
 import LoadingComponent from '../components/LoadingComponent';
+import { Image } from 'expo-image';
+import { FadeLoading } from 'react-native-fade-loading';
 
 
 
@@ -56,17 +58,20 @@ const ProfileInfo = () => {
     }, [])
   );
 
-
+  const [loadingimg, setLoadingimg] = useState(true);
 
 
   return(
   <View className="items-center mb-6 bg-bioVerde">
     <View style={styles.box}>
+      {loadingimg && <FadeLoading primaryColor="gray" secondaryColor="lightgray" className="flex-1 w-full h-full absolute" />}
       <Image
         source={{ uri: profilePicture }}
         className="w-24 h-24 rounded-full mb-2"
-        
+        cachePolicy="memory-disk"
+        onLoadEnd={() => setLoadingimg(false)}
       />
+      
     </View>
     
     <Text className="text-white text-xl font-semibold">{username}</Text>

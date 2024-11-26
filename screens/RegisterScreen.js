@@ -92,7 +92,7 @@ const RegisterScreen = () => {
       >
         <View className="items-center mb-8">
           <Image
-            source={require('../assets/logo.jpg')}
+            source={require('../assets/images/urso.png')}
             className="w-16 h-16"
           />
         </View>

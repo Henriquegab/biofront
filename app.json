@@ -6,9 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/logo.jpg",
-      "resizeMode": "stretch",
+      "image": "./assets/images/urso.png",
+      "resizeMode": "contain",
       "backgroundColor": "#fcf9e6"
     },
     "assetBundlePatterns": [

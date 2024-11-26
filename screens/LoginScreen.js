@@ -122,7 +122,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <View className="items-center mb-8">
           <Image
-            source={require('../assets/logo.jpg')}
+            source={require('../assets/images/urso.png')}
             className="w-16 h-16"
           />
           <Text className="text-bioTextoCinzaEscuro text-4xl font-bold text-center pt-4">BIOFRONT</Text>

@@ -14,7 +14,7 @@ const SplashScreen = () => {
   return (
     <View className="flex-1 justify-center items-center bg-bioPrincipal">
       <Animated.Image
-        source={require('../assets/logo.jpg')}
+        source={require('../assets/images/urso.png')}
         style={[styles.image, { transform: [{ scale: imageScale }] }]}
       />
     </View>
